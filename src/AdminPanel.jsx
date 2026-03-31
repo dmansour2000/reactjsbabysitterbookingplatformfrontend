@@ -21,14 +21,14 @@ function AdminPanel() {
 
     try {
       const response = await fetch(
-        "https://babysitter-booking-backend-8e0cb4081e09.herokuapp.com/api/user/users",
+        "https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/user/users",
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -44,20 +44,20 @@ function AdminPanel() {
       } else if (response.status === 401) {
         alert(
           t("sessionExpired") ||
-            "Your session has expired. Please log in again."
+            "Your session has expired. Please log in again.",
         );
         navigate("/login");
       } else {
         alert(
           t("failedToFetchUsers") ||
-            "Failed to fetch users. Please try again later."
+            "Failed to fetch users. Please try again later.",
         );
       }
     } catch (error) {
       console.error("Error:", error);
       alert(
         t("errorOccurred") ||
-          "An error occurred while fetching users. Please try again later."
+          "An error occurred while fetching users. Please try again later.",
       );
     } finally {
       setLoading(false);
@@ -69,19 +69,19 @@ function AdminPanel() {
 
     try {
       const response = await fetch(
-        `https://babysitter-booking-backend-8e0cb4081e09.herokuapp.com/api/user/users/${userId}`,
+        `https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/user/users/${userId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
         alert(
           t("failedToDeleteUser") ||
-            "Failed to delete user. Please try again later."
+            "Failed to delete user. Please try again later.",
         );
         return;
       }
@@ -92,7 +92,7 @@ function AdminPanel() {
       console.error("Error:", error);
       alert(
         t("errorOccurredWhileDeleting") ||
-          "An error occurred while deleting the user. Please try again later."
+          "An error occurred while deleting the user. Please try again later.",
       );
     }
   };
@@ -100,7 +100,7 @@ function AdminPanel() {
   const confirmAndDeleteUser = (userId) => {
     if (
       window.confirm(
-        t("confirmDelete") || "Are you sure you want to delete this user?"
+        t("confirmDelete") || "Are you sure you want to delete this user?",
       )
     ) {
       deleteUser(userId);

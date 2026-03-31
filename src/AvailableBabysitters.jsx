@@ -11,7 +11,7 @@ function AvailableBabysitters() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://babysitter-booking-backend-8e0cb4081e09.herokuapp.com/api/babysitter"
+        "https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/babysitter",
       );
       const data = await response.json();
 
@@ -20,14 +20,14 @@ function AvailableBabysitters() {
       } else {
         console.error("Unexpected API response format:", data);
         alert(
-          t("unexpectedResponse") || "Unexpected response from the server."
+          t("unexpectedResponse") || "Unexpected response from the server.",
         );
       }
     } catch (error) {
       console.error("Error:", error);
       alert(
         t("errorFetchingBabysitters") ||
-          "An error occurred while fetching babysitters. Please try again later."
+          "An error occurred while fetching babysitters. Please try again later.",
       );
     } finally {
       setLoading(false);

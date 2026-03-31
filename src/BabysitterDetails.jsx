@@ -15,7 +15,7 @@ function BabysitterDetails() {
 
     if (!token) {
       alert(
-        t("loginRequired") || "You need to be logged in to view this page."
+        t("loginRequired") || "You need to be logged in to view this page.",
       );
       navigate("/login");
       return;
@@ -23,14 +23,14 @@ function BabysitterDetails() {
 
     try {
       const response = await fetch(
-        `https://babysitter-booking-backend-8e0cb4081e09.herokuapp.com/api/babysitter/users/${id}`,
+        `https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/babysitter/users/${id}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -39,20 +39,20 @@ function BabysitterDetails() {
       } else if (response.status === 401) {
         alert(
           t("sessionExpired") ||
-            "Your session has expired. Please log in again."
+            "Your session has expired. Please log in again.",
         );
         navigate("/login");
       } else {
         alert(
           t("fetchError") ||
-            "Failed to fetch babysitter details. Please try again later."
+            "Failed to fetch babysitter details. Please try again later.",
         );
       }
     } catch (error) {
       console.error("Error:", error);
       alert(
         t("errorOccurred") ||
-          "An error occurred while fetching babysitter details."
+          "An error occurred while fetching babysitter details.",
       );
     } finally {
       setLoading(false);
