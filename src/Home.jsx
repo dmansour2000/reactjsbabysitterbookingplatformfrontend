@@ -36,7 +36,7 @@ function Home() {
           <span>{t("need-help")}</span>
         </div>
         <div id="Babysitter">
-          <span>{t("babysitter")}</span>
+          <span>{t("welcome")}</span>
         </div>
       </div>
     </div>
