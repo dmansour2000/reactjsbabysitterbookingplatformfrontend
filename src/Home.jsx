@@ -16,9 +16,9 @@ function Home() {
         </div>
       </div>
       <div id="Image">
-        <img id="Your_Image_Here" src="/imgs/Your_Image_Here.png"></img>
+        <img id="Your_Image_Here" src="imgs/Your_Image_Here.png"></img>
 
-        <img id="Layer_1" src="/imgs/Layer_1.png"></img>
+        <img id="Layer_1" src="imgs/Layer_1.png"></img>
       </div>
       <div id="Text">
         <div id="Lorem_ipsum_dolor_sit_amet_con">
