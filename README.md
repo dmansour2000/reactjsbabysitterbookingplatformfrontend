@@ -10,7 +10,7 @@ The Frontend is built using React.js and the backend is built using Node.js and 
    <img src="https://github.com/dmansour2000/nodejsbabysitterbookingplatformfrontend/blob/main/Screenshot%202025-01-15%20at%204.53.39%E2%80%AFAM.png", width="500" hspace="4"/>
 </p>
 
-## Heroku WebApp Link 
+## Github Pages App Link 
 [https://babysitter-booking-af7cbf57133b.herokuapp.com](https://babysitter-booking-af7cbf57133b.herokuapp.com)
 
 ## Available Scripts
