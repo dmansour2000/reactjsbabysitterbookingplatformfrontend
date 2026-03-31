@@ -10,14 +10,14 @@ function Contact() {
         <div id="Icons">
           <img
             id="Vector_Smart_Object_Doble_Clic_l"
-            src="imgs/Vector_Smart_Object_Doble_Clic_l.png"
+            src="/imgs/Vector_Smart_Object_Doble_Clic_l.png"
           ></img>
         </div>
       </div>
       <div id="Image">
-        <img id="Your_Image_Here" src="imgs/Your_Image_Here.png"></img>
+        <img id="Your_Image_Here" src="/imgs/Your_Image_Here.png"></img>
 
-        <img id="Layer_1" src="imgs/Layer_1.png"></img>
+        <img id="Layer_1" src="/imgs/Layer_1.png"></img>
       </div>
       <div id="Text">
         <div id="Need_help_with_your_kid">
