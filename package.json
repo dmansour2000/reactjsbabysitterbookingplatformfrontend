@@ -5,13 +5,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "serve": "node server.cjs",
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "serve": "node server.cjs",
+    "lint": "eslint ."
   },
   "dependencies": {
     "express": "^4.21.2",
