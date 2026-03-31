@@ -77,10 +77,7 @@ function Login() {
           <button type="submit">{t("login")}</button>
         </form>
         <p>
-          {t("dontHaveAccount")}{" "}
-          <Link to="/nodejsbabysitterbookingplatformfrontend/register">
-            {t("registerHere")}
-          </Link>
+          {t("dontHaveAccount")} <Link to="/register">{t("registerHere")}</Link>
         </p>
       </div>
     </div>
