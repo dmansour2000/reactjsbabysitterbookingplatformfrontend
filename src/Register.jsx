@@ -17,14 +17,14 @@ function Register() {
 
     try {
       const response = await fetch(
-        `https://babysitter-booking-backend-8e0cb4081e09.herokuapp.com/api/${role}/register`,
+        `https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/${role}/register`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ username, password, name }),
-        }
+        },
       );
 
       const data = await response.json();

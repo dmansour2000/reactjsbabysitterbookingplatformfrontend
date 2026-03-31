@@ -18,7 +18,7 @@ function EditProfile() {
     setServices((prevServices) =>
       e.target.checked
         ? [...prevServices, value]
-        : prevServices.filter((service) => service !== value)
+        : prevServices.filter((service) => service !== value),
     );
   };
 
@@ -37,7 +37,7 @@ function EditProfile() {
       }
 
       const response = await fetch(
-        "https://babysitter-booking-backend-8e0cb4081e09.herokuapp.com/api/babysitter/profile",
+        "https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/babysitter/profile",
         {
           method: "PUT",
           headers: {
@@ -45,7 +45,7 @@ function EditProfile() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(profileData),
-        }
+        },
       );
 
       const data = await response.json();
