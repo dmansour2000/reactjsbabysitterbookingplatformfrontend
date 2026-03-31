@@ -11,7 +11,7 @@ function Home() {
         <div id="Icons">
           <img
             id="Vector_Smart_Object_Doble_Clic_l"
-            src="imgs/Vector_Smart_Object_Doble_Clic_l.png"
+            src="/imgs/Vector_Smart_Object_Doble_Clic_l.png"
           ></img>
         </div>
       </div>
