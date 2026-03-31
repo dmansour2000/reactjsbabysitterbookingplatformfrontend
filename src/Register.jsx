@@ -93,9 +93,7 @@ function Register() {
           </button>
         </form>
         <p>{t("alreadyHaveAccount")}</p>
-        <Link to="/nodejsbabysitterbookingplatformfrontend/login">
-          {t("loginHere")}
-        </Link>
+        <Link to="/login">{t("loginHere")}</Link>
       </div>
     </div>
   );
