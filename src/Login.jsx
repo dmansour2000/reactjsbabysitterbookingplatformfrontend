@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./App.css";
 import "./i18n";
 
@@ -77,7 +77,10 @@ function Login() {
           <button type="submit">{t("login")}</button>
         </form>
         <p>
-          {t("dontHaveAccount")} <a href="/register">{t("registerHere")}</a>
+          {t("dontHaveAccount")}{" "}
+          <Link to="/nodejsbabysitterbookingplatformfrontend/register">
+            {t("registerHere")}
+          </Link>
         </p>
       </div>
     </div>

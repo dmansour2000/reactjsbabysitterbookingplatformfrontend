@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./i18n";
 
@@ -93,9 +93,9 @@ function Register() {
           </button>
         </form>
         <p>{t("alreadyHaveAccount")}</p>
-        <a href="/login" data-i18n="loginHere">
+        <Link to="/nodejsbabysitterbookingplatformfrontend/login">
           {t("loginHere")}
-        </a>
+        </Link>
       </div>
     </div>
   );
