@@ -76,6 +76,7 @@ function EditProfile() {
           type="tel"
           id="phone"
           value={phone}
+          style={{ color: "#111" }}
           onChange={(e) => setPhone(e.target.value)}
           placeholder={t("mobilePhone") || "Enter your phone number"}
           required
@@ -86,6 +87,7 @@ function EditProfile() {
           type="number"
           id="age"
           value={age}
+          style={{ color: "#111" }}
           onChange={(e) => setAge(e.target.value)}
           placeholder={t("age") || "Enter your age"}
           required
@@ -95,6 +97,7 @@ function EditProfile() {
         <input
           type="text"
           id="nationality"
+          style={{ color: "#111" }}
           value={nationality}
           onChange={(e) => setNationality(e.target.value)}
           placeholder={t("nationality") || "Enter your nationality"}
