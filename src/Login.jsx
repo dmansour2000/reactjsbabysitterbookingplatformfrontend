@@ -63,7 +63,7 @@ function Login() {
           <input
             type="text"
             placeholder={t("username")}
-            style="color: #111"
+            style={{ color: "#111" }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -71,7 +71,7 @@ function Login() {
           <input
             type="password"
             placeholder={t("password")}
-            style="color: #111"
+            style={{ color: "#111" }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
