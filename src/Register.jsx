@@ -62,12 +62,14 @@ function Register() {
           <input
             type="text"
             value={username}
+            style="color: #111;"
             onChange={(e) => setUsername(e.target.value)}
             placeholder={t("username")}
             required
           />
           <input
             type="password"
+            style="color: #111;"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t("password")}
@@ -75,6 +77,7 @@ function Register() {
           />
           <input
             type="text"
+            style="color: #111;"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder={t("name")}
