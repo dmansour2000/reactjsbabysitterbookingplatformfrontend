@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import {
   HashRouter as Router,
-  BrowserRouter,
   Routes,
   Route,
   Link,
@@ -37,7 +36,7 @@ function App() {
       </div>
       <div class="br"></div>
       {/* Header Section */}
-      <BrowserRouter basename="/reactjsbabysitterbookingplatformfrontend">
+      <Router basename="/reactjsbabysitterbookingplatformfrontend">
         <div id="Design">
           <img id="Shape" src="imgs/Shape.png"></img>
         </div>
@@ -69,7 +68,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
