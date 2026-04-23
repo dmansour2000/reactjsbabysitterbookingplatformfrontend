@@ -21,7 +21,7 @@ function AdminPanel() {
 
     try {
       const response = await fetch(
-        "https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/user/users",
+        "https://nodejsbabysitterbookingplatformbackend.onrender.com/api/user/users",
         {
           method: "GET",
           headers: {

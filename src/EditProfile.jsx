@@ -37,7 +37,7 @@ function EditProfile() {
       }
 
       const response = await fetch(
-        "https://nodejsbabysitterbookingplatformbackend.onrender.com/babysitter/profile",
+        "https://nodejsbabysitterbookingplatformbackend.onrender.com/api/babysitter/profile",
         {
           method: "PUT",
           headers: {
