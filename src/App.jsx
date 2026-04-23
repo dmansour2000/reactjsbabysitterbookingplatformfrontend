@@ -37,7 +37,7 @@ function App() {
       </div>
       <div class="br"></div>
       {/* Header Section */}
-      <Router>
+      <BrowserRouter basename="/reactjsbabysitterbookingplatformfrontend">
         <div id="Design">
           <img id="Shape" src="imgs/Shape.png"></img>
         </div>
@@ -54,7 +54,7 @@ function App() {
         </div>
 
         {/* Routes */}
-        <BrowserRouter basename="/reactjsbabysitterbookingplatformfrontend">
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -68,8 +68,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
-        </BrowserRouter>
-      </Router>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
