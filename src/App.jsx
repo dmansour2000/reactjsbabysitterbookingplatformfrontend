@@ -53,7 +53,7 @@ function App() {
         </div>
 
         {/* Routes */}
-        <Routes>
+        <BrowserRoutes basename="/reactjsbabysitterbookingplatformfrontend">
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -67,7 +67,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
-        </Routes>
+        </BrowserRoutes>
       </Router>
     </div>
   );
