@@ -7,7 +7,7 @@ i18n
   .use(initReactI18next)
   .init({
     backend: {
-      loadPath: '/nodejsbabysitterbookingplatformfrontend/locales/{{lng}}.json',
+      loadPath: '/reactjsbabysitterbookingplatformfrontend/locales/{{lng}}.json',
     },
     fallbackLng: 'en',
     debug: true,
