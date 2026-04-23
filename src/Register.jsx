@@ -54,7 +54,6 @@ function Register() {
         <form
           onSubmit={handleSubmit}
           style={{
-            color: rgb(17, 17, 17),
             border: "1px solid #ccc",
             padding: "20px",
             maxWidth: "300px",
