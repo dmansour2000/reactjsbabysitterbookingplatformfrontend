@@ -15,34 +15,44 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const endpoint =
+      role === "babysitter" ? "babysitter/register" : "user/register";
+
     try {
       const response = await fetch(
-        `https://nodejsbabysitterbookingplatformbackend.onrender.com/api/${role}/register`,
+        `https://nodejsbabysitterbookingplatformbackend.onrender.com/api/${endpoint}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username, password, name }),
+          body: JSON.stringify({
+            username,
+            password,
+            name,
+            phone: "",
+            age: 0,
+            nationality: "",
+            services: [],
+          }),
         },
       );
 
       const data = await response.json();
+
       if (response.ok) {
         alert("Registration successful!");
         localStorage.setItem("token", data.token);
 
-        // Redirect based on the role
-        if (role === "babysitter") {
-          navigate("/edit-profile");
-        } else {
-          navigate("/available-babysitters"); // Redirect normal users to babysitters page
-        }
+        navigate(
+          role === "babysitter" ? "/edit-profile" : "/available-babysitters",
+        );
       } else {
         alert(data.msg || "Registration failed");
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("Something went wrong.");
     }
   };
 
@@ -83,7 +93,11 @@ function Register() {
             placeholder={t("name")}
             required
           />
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            style={{ color: "#111" }}
+          >
             <option value="user" data-i18n="user">
               {t("user")}
             </option>
