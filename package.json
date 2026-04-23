@@ -1,6 +1,6 @@
 {
   "name": "babysitter-booking",
-  "homepage": "https://dmansour2000.github.io/nodejsbabysitterbookingplatformfrontend",
+  "homepage": "https://dmansour2000.github.io/reactjsbabysitterbookingplatformfrontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -35,5 +35,5 @@
     "serve": "^14.2.4",
     "vite": "^6.0.5"
   },
-  "proxy": "https://nodejsbabysitterbookingplatformbackend-production.up.railway.app"
+  "proxy": "https://nodejsbabysitterbookingplatformbackend.onrender.com"
 }
