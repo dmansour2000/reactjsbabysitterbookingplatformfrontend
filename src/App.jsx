@@ -36,7 +36,7 @@ function App() {
       </div>
       <div class="br"></div>
       {/* Header Section */}
-      <Router basename="/reactjsbabysitterbookingplatformfrontend">
+      <Router>
         <div id="Design">
           <img id="Shape" src="imgs/Shape.png"></img>
         </div>
