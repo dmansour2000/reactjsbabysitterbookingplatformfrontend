@@ -138,7 +138,7 @@ function AdminPanel() {
               <td>
                 {user.role === "babysitter" && (
                   <a
-                    href={`/reactjsbabysitterbookingplatformfrontend/view-user/${user._id}`}
+                    href={`/view-user/${user._id}`}
                     style={{ marginRight: "10px" }}
                   >
                     {t("viewDetails") || "View Details"}
