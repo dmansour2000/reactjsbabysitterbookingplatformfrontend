@@ -54,6 +54,7 @@ function Register() {
         <form
           onSubmit={handleSubmit}
           style={{
+            color: rgb(17, 17, 17),
             border: "1px solid #ccc",
             padding: "20px",
             maxWidth: "300px",
@@ -70,6 +71,7 @@ function Register() {
           <input
             type="password"
             style="color: #111;"
+            value="Type Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t("password")}
