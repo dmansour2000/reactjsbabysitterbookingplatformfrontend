@@ -136,9 +136,11 @@ function AdminPanel() {
               <td>{user.username}</td>
               <td>{user.role}</td>
               <td>
-                <button onClick={() => navigate(`/view-user/${user._id}`)}>
-                  {t("viewDetails")}
-                </button>
+                {user.role === "babysitter" ? (
+                  <button onClick={() => navigate(`/view-user/${user._id}`)}>
+                    {t("viewDetails")}
+                  </button>
+                ) : null}
                 <button onClick={() => confirmAndDeleteUser(user._id)}>
                   {t("delete") || "Delete"}
                 </button>
