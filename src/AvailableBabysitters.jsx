@@ -11,7 +11,7 @@ function AvailableBabysitters() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://nodejsbabysitterbookingplatformbackend.onrender.com/api/babysitter",
+        "https://nodejsbabysitterbookingplatformbackend.onrender.com/babysitter",
       );
       const data = await response.json();
 

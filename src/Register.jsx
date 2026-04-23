@@ -17,7 +17,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        `https://nodejsbabysitterbookingplatformbackend.onrender.com/api/${role}/register`,
+        `https://nodejsbabysitterbookingplatformbackend.onrender.com/${role}/register`,
         {
           method: "POST",
           headers: {
@@ -62,14 +62,14 @@ function Register() {
           <input
             type="text"
             value={username}
-            style="color: #111;"
+            style="color: #111"
             onChange={(e) => setUsername(e.target.value)}
             placeholder={t("username")}
             required
           />
           <input
             type="password"
-            style="color: #111;"
+            style="color: #111"
             value="Type Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
