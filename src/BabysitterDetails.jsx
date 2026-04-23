@@ -23,7 +23,7 @@ function BabysitterDetails() {
 
     try {
       const response = await fetch(
-        `https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/babysitter/users/${id}`,
+        `https://nodejsbabysitterbookingplatformbackend.onrender.com/api/babysitter/users/${id}`,
         {
           method: "GET",
           headers: {

@@ -17,7 +17,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        `https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/${role}/register`,
+        `https://nodejsbabysitterbookingplatformbackend.onrender.com/api/${role}/register`,
         {
           method: "POST",
           headers: {

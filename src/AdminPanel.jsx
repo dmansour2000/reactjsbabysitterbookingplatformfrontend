@@ -69,7 +69,7 @@ function AdminPanel() {
 
     try {
       const response = await fetch(
-        `https://nodejsbabysitterbookingplatformbackend-production.up.railway.app/api/user/users/${userId}`,
+        `https://nodejsbabysitterbookingplatformbackend.onrender.com/api/user/users/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -138,7 +138,7 @@ function AdminPanel() {
               <td>
                 {user.role === "babysitter" && (
                   <a
-                    href={`/nodejsbabysitterbookingplatformfrontend/view-user/${user._id}`}
+                    href={`/reactjsbabysitterbookingplatformfrontend/view-user/${user._id}`}
                     style={{ marginRight: "10px" }}
                   >
                     {t("viewDetails") || "View Details"}
