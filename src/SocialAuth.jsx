@@ -31,13 +31,20 @@ function loadScript(src, id) {
 }
 
 async function issueNonce(provider) {
-  const response = await fetch(apiUrl("/api/user/oauth/nonce"), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ provider }),
-  });
+  let response;
+  try {
+    response = await fetch(apiUrl("/api/user/oauth/nonce"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ provider }),
+    });
+  } catch {
+    throw new Error("socialNonceError");
+  }
   const data = await response.json().catch(() => ({}));
-  if (!response.ok || !data.nonce) throw new Error(data.msg === "Social sign-in provider is not configured" ? "socialAuthNotConfigured" : "socialProviderLoadError");
+  if (!response.ok || !data.nonce) {
+    throw new Error(data.msg === "Social sign-in provider is not configured" ? "socialAuthNotConfigured" : "socialNonceError");
+  }
   return data.nonce;
 }
 
@@ -46,6 +53,7 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
   const googleButton = useRef(null);
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const configured = Boolean(googleClientId);
 
   const authenticate = async (provider, credential, name = "", nonce) => {
@@ -103,7 +111,7 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
         .catch((loadError) => setError(t(loadError.message || "socialProviderLoadError")));
     }
     return () => { active = false; };
-  }, [i18n.resolvedLanguage, t]);
+  }, [i18n.resolvedLanguage, retryCount, t]);
 
   if (!configured) return <section className="social-auth" aria-label={t("socialSignIn")}>
     <div className="social-auth-divider"><span>{t("orContinueWith")}</span></div>
@@ -114,8 +122,9 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
     <div className="social-auth-divider"><span>{t("orContinueWith")}</span></div>
     <div className="social-auth-buttons">
       <div className="google-auth-button" ref={googleButton} aria-label={t("continueWithGoogle")} />
-      {!ready && <span className="social-auth-loading" role="status">{t("loadingGoogleSignIn")}</span>}
+      {!ready && !error && <span className="social-auth-loading" role="status">{t("loadingGoogleSignIn")}</span>}
     </div>
     {error && <p className="form-error" role="alert">{error}</p>}
+    {error && <button type="button" className="social-auth-retry" onClick={() => { setError(""); setRetryCount((count) => count + 1); }}>{t("retryGoogleSignIn")}</button>}
   </section>;
 }

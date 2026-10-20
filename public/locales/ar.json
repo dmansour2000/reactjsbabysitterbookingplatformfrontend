@@ -303,6 +303,8 @@
   "orContinueWith": "أو المتابعة باستخدام",
   "continueWithGoogle": "المتابعة باستخدام Google",
   "loadingGoogleSignIn": "جارٍ تحميل تسجيل الدخول عبر Google…",
+  "retryGoogleSignIn": "إعادة محاولة تسجيل الدخول عبر Google",
+  "socialNonceError": "تعذر الاتصال بخدمة تسجيل الدخول. تأكدي من عمل الخادم ثم حاولي مرة أخرى.",
   "signingIn": "جارٍ تسجيل الدخول…",
   "socialAuthNotConfigured": "تسجيل الدخول عبر Google غير مهيأ. أعدّي معرّف عميل Google لتفعيل هذا الخيار.",
   "socialProviderLoadError": "تعذر تحميل خدمة تسجيل الدخول. تحققي من الاتصال وحاولي مرة أخرى.",

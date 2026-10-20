@@ -313,6 +313,7 @@ html[dir="rtl"] .booking-approval-actions .booking-action-hint { direction: rtl;
 .google-auth-button { display: flex; justify-content: center; width: 100%; min-height: 44px; }
 .google-auth-button > div { max-width: 100%; }
 .social-auth-loading { display: block; min-height: 44px; color: #5d4d60; font-size: .9rem; line-height: 44px; text-align: center; }
+.social-auth-retry { display: block; width: 100%; max-width: 360px; margin: .5rem auto 0; }
 .empty-state .primary-link { margin-top: 1rem; }
 
 @media (max-width: 720px) {
