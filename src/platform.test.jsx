@@ -18,6 +18,7 @@ import EditProfile from "./EditProfile";
 import MyProfile from "./MyProfile";
 import SEO from "./SEO";
 import App from "./App";
+import Blacklist from "./Blacklist";
 
 afterEach(cleanup);
 
@@ -416,6 +417,53 @@ describe("admin account actions", () => {
     expect(screen.getByRole("heading", { name: "Mona" })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "approve" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/sitter-id\/moderation$/), expect.objectContaining({ method: "PATCH" })));
+  });
+});
+
+describe("caregiver safety reports", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    vi.stubGlobal("fetch", vi.fn());
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it("shows approved reports publicly and never displays pending user reports as public", async () => {
+    localStorage.setItem("token", "family-token");
+    localStorage.setItem("role", "user");
+    fetch.mockImplementation((url) => Promise.resolve(String(url).endsWith("/api/blacklist/mine")
+      ? jsonResponse([{ _id: "pending-1", name: "Pending Caregiver", status: "pending" }])
+      : jsonResponse([{ _id: "approved-1", name: "Approved Caregiver", nationality: "Egypt", reason: "An approved report reason.", photoUrl: "/api/blacklist/approved-1/photo" }])));
+
+    renderWithRouter(<Blacklist />);
+
+    expect(await screen.findByRole("heading", { name: "Approved Caregiver" })).toBeInTheDocument();
+    expect(screen.getByText("Pending Caregiver · blacklistStatus_pending")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Pending Caregiver" })).not.toBeInTheDocument();
+  });
+
+  it("submits a report with the required photo and keeps approval on the server", async () => {
+    localStorage.setItem("token", "family-token");
+    localStorage.setItem("role", "user");
+    fetch.mockImplementation((url, options = {}) => {
+      if (String(url).endsWith("/api/blacklist") && options.method === "POST") return Promise.resolve(jsonResponse({ id: "new-report", status: "pending" }, { status: 201 }));
+      if (String(url).endsWith("/api/blacklist/mine")) return Promise.resolve(jsonResponse([{ _id: "new-report", name: "Reported Caregiver", status: "pending" }]));
+      return Promise.resolve(jsonResponse([]));
+    });
+    renderWithRouter(<Blacklist />);
+    fireEvent.change(screen.getByLabelText("blacklistName"), { target: { value: "Reported Caregiver" } });
+    fireEvent.change(screen.getByLabelText("blacklistReason"), { target: { value: "A detailed firsthand account of the incident." } });
+    fireEvent.change(screen.getByLabelText("blacklistPhotoRequired"), { target: { files: [new File(["photo"], "caregiver.png", { type: "image/png" })] } });
+    fireEvent.click(screen.getByRole("button", { name: "blacklistSubmit" }));
+
+    expect(await screen.findByRole("status")).toHaveTextContent("blacklistSubmitted");
+    const submission = fetch.mock.calls.find(([url, options]) => String(url).endsWith("/api/blacklist") && options?.method === "POST");
+    expect(submission[1].body).toBeInstanceOf(FormData);
+    expect(submission[1].body.get("name")).toBe("Reported Caregiver");
+    expect(submission[1].body.get("photo")).toBeInstanceOf(File);
+    expect(screen.getByText("Reported Caregiver · blacklistStatus_pending")).toBeInTheDocument();
   });
 });
 

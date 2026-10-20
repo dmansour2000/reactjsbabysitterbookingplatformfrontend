@@ -244,7 +244,7 @@ function AdminPanel() {
           <p>{t("nationalityType")}: {sitter.nationalityType === "other" ? t("otherNationality") : t("egyptian")}</p>
           <div className="admin-document-links">{(sitter.nationalityType === "other" ? [["passport", "passportUpload"], ["residency", "residencyUpload"]] : [["nationalId", "nationalIdUpload"]]).map(([kind, label]) => <button type="button" disabled={!sitter.verificationDocuments?.[kind]} key={kind} onClick={() => openDocument(sitter._id, kind)}>{t(label)}{sitter.verificationDocuments?.[kind] ? " ✓" : ` · ${t("missing")}`}</button>)}</div>
           <button className="review-profile-button" type="button" onClick={() => setReviewProfile(sitter)}>{t("viewCaregiverProfile")}</button>
-          <div className="form-actions">{sitter.moderationStatus !== "approved" && <button type="button" onClick={() => moderateSitter(sitter._id, "approved")}>{t("approve")}</button>}{sitter.moderationStatus !== "unapproved" && <button type="button" onClick={() => moderateSitter(sitter._id, "unapproved")}>{t("unapprove")}</button>}{sitter.moderationStatus !== "blacklisted" && <button type="button" onClick={() => moderateSitter(sitter._id, "blacklisted")}>{t("blacklist")}</button>}<button type="button" onClick={() => removeSitter(sitter._id)}>{t("removeProfile")}</button></div>
+          <div className="form-actions">{sitter.moderationStatus !== "approved" && <button type="button" onClick={() => moderateSitter(sitter._id, "approved")}>{t("approve")}</button>}{sitter.moderationStatus !== "unapproved" && <button type="button" onClick={() => moderateSitter(sitter._id, "unapproved")}>{t("unapprove")}</button>}{sitter.moderationStatus !== "blacklisted" && <button type="button" onClick={() => moderateSitter(sitter._id, "blacklisted")}>{t("blacklist")}</button>}{isSuperAdmin && <button type="button" onClick={() => removeSitter(sitter._id)}>{t("removeProfile")}</button>}</div>
         </article>)}</div>}
       </section>
       {reviewProfile && <div className="photo-modal" role="presentation" onClick={() => setReviewProfile(null)}>
@@ -298,10 +298,10 @@ function AdminPanel() {
               <td>{user.username}</td>
               <td>{t(user.role)}</td>
               <td>
-                <button type="button" onClick={() => viewUserDetails(user)}>{t("viewDetails")}</button>
-                <button type="button" onClick={() => confirmAndDeleteUser(user)}>
+                {(isSuperAdmin || user.role !== "user") && <button type="button" onClick={() => viewUserDetails(user)}>{t("viewDetails")}</button>}
+                {(isSuperAdmin || user.role !== "user") && <button type="button" onClick={() => confirmAndDeleteUser(user)}>
                   {t("delete")}
-                </button>
+                </button>}
               </td>
             </tr>
           ))}

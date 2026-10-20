@@ -19,6 +19,7 @@ import Contact from "./Contact"; // Contact page component
 import Services from "./Services"; // Services page component
 import Bookings from "./Bookings";
 import Policies from "./Policies";
+import Blacklist from "./Blacklist";
 import AccountSecurity from "./AccountSecurity";
 import PasswordRecovery from "./PasswordRecovery";
 import SEO from "./SEO";
@@ -67,6 +68,7 @@ function App() {
             <Link to="/services">{t("services")}</Link>
             <Link to="/contact">{t("contactus")}</Link>
             <Link to="/policies">{t("communityPolicies")}</Link>
+            <Link to="/blacklist">{t("blacklistTitle")}</Link>
             {role === "user" && <>
               <Link to="/available-babysitters">{t("findCare")}</Link>
               <Link to="/bookings">{t("myBookings")}</Link>
@@ -107,6 +109,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
           <Route path="/policies" element={<Policies />} />
+          <Route path="/blacklist" element={<Blacklist />} />
         </Routes>
       </Router>
     </div>

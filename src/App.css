@@ -328,6 +328,67 @@ html[dir="rtl"] .booking-approval-actions .booking-action-hint { direction: rtl;
   .booking-card-header { flex-direction: column; }
   .container { width: 94vw; }
 }
+
+.blacklist-form-panel form {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.blacklist-form-panel input,
+.blacklist-form-panel select,
+.blacklist-form-panel textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+}
+
+.blacklist-form-panel input[type="file"] {
+  color: inherit;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.blacklist-card {
+  margin-top: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.blacklist-photo {
+  display: block;
+  width: min(100%, 240px);
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.blacklist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.blacklist-actions button,
+.blacklist-review-panel .secondary-button {
+  width: auto;
+  min-width: 8rem;
+}
+
+.blacklist-list {
+  margin-top: 2rem;
+}
+
+.blacklist-list > h2 {
+  margin-bottom: 1rem;
+}
+
+.danger-button {
+  background: #a64054;
+  color: #fff;
+}
 input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
   outline: 3px solid #683f80;
   outline-offset: 2px;
