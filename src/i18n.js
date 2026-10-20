@@ -2,6 +2,9 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import HttpApi from 'i18next-http-backend';
 
+const savedLanguage = localStorage.getItem('language');
+const initialLanguage = savedLanguage === 'en' || savedLanguage === 'ar' ? savedLanguage : 'ar';
+
 i18n
   .use(HttpApi) // Load translations from backend
   .use(initReactI18next) // Pass i18n instance to react-i18next
@@ -9,7 +12,7 @@ i18n
     backend: {
       loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}.json`,
     },
-    lng: localStorage.getItem('language') || 'ar',
+    lng: initialLanguage,
     fallbackLng: 'ar',
     debug: true,
     interpolation: {

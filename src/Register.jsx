@@ -13,7 +13,11 @@ function Register() {
   const [role, setRole] = useState("user");
   const navigate = useNavigate();
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const languageCode = (i18n.resolvedLanguage || i18n.language || "ar").split("-")[0];
+  const registrationText = (key, arabic, english) => t(key, {
+    defaultValue: languageCode === "ar" ? arabic : english,
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [googleRegistration, setGoogleRegistration] = useState(null);
@@ -79,7 +83,11 @@ function Register() {
       }
       completeRegistration(data);
     } catch (requestError) {
-      setGoogleRegistrationError(t(requestError.message || "socialRegistrationError"));
+      setGoogleRegistrationError(registrationText(
+        requestError.message || "socialRegistrationError",
+        "تعذر إكمال التسجيل عبر Google. حاولي مرة أخرى.",
+        "Could not complete Google registration. Please try again.",
+      ));
     } finally {
       setIsCompletingGoogleRegistration(false);
     }
@@ -88,23 +96,23 @@ function Register() {
   if (googleRegistration) {
     return (
       <div className="container">
-        <h1>{t("completeGoogleRegistration")}</h1>
+        <h1>{registrationText("completeGoogleRegistration", "أكملي إنشاء حسابك في كير نست", "Complete your CareNest account")}</h1>
         <div className="parent" id="google-registration-completion">
-          <h2>{t("chooseAccountType")}</h2>
-          <p>{t("googleAccountEmail")}: {googleRegistration.googleUser?.email}</p>
+          <h2>{registrationText("chooseAccountType", "اختاري طريقة استخدامك لكير نست", "Choose how you want to use CareNest")}</h2>
+          <p>{registrationText("googleAccountEmail", "حساب Google", "Google account")}: {googleRegistration.googleUser?.email}</p>
           <form onSubmit={finishGoogleRegistration}>
-            <label htmlFor="google-account-role">{t("accountType")}</label>
+            <label htmlFor="google-account-role">{registrationText("accountType", "أرغب في الانضمام إلى كير نست بصفة", "I want to join CareNest as a")}</label>
             <select id="google-account-role" value={googleRole} onChange={(event) => setGoogleRole(event.target.value)}>
               <option value="user">{t("user")}</option>
               <option value="babysitter">{t("babysitter")}</option>
             </select>
             {googleRegistrationError && <p className="form-error" role="alert">{googleRegistrationError}</p>}
             <button type="submit" disabled={isCompletingGoogleRegistration}>
-              {isCompletingGoogleRegistration ? t("registering") : t("completeRegistration")}
+              {isCompletingGoogleRegistration ? t("registering") : registrationText("completeRegistration", "متابعة", "Continue")}
             </button>
           </form>
           <button type="button" className="secondary-button" onClick={() => { setGoogleRegistration(null); setGoogleRegistrationError(""); }}>
-            {t("backToRegistration")}
+            {registrationText("backToRegistration", "العودة إلى التسجيل", "Back to registration")}
           </button>
         </div>
       </div>
