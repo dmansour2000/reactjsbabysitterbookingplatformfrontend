@@ -48,15 +48,19 @@ function Register() {
       });
 
       const data = await response.json().catch(() => ({}));
-      if (response.ok) {
-        if (!data.token) throw new Error("registrationFailed");
-        completeRegistration({ token: data.token, user: { role } });
-      } else {
-        setError(t("registrationFailed"));
+      if (!response.ok) {
+        const message = data.msg || "";
+        if (/already exists/i.test(message)) throw new Error("usernameAlreadyUsed");
+        if (/email is already registered|email address is already in use/i.test(message)) throw new Error("emailAlreadyUsed");
+        if (/valid email/i.test(message)) throw new Error("registrationInvalidEmail");
+        if (/password of at least 8 characters/i.test(message)) throw new Error("registrationRequirements");
+        throw new Error(response.status >= 500 ? "registrationError" : "registrationFailed");
       }
+      if (!data.token) throw new Error("registrationFailed");
+      completeRegistration({ token: data.token, user: { role } });
     } catch (error) {
       console.error("Error:", error);
-      setError(t(error.message === "registrationFailed" ? "registrationFailed" : "registrationError"));
+      setError(t(error.message || "registrationError"));
     } finally {
       setIsSubmitting(false);
     }

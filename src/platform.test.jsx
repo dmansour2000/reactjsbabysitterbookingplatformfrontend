@@ -176,6 +176,19 @@ describe("authentication pages", () => {
     expect(localStorage.getItem("role")).toBe("user");
   });
 
+  it("explains when normal registration fails because an email is already used", async () => {
+    fetch.mockResolvedValue(jsonResponse({ msg: "Email is already registered to another account" }, { ok: false, status: 409 }));
+    renderWithRouter(<Register />);
+    fireEvent.change(screen.getByLabelText("username"), { target: { value: "family2" } });
+    fireEvent.change(screen.getByLabelText("email"), { target: { value: "family@example.com" } });
+    fireEvent.change(screen.getByLabelText("password"), { target: { value: "password123" } });
+    fireEvent.change(screen.getByLabelText("name"), { target: { value: "A Family" } });
+    fireEvent.click(screen.getByRole("button", { name: "register" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("emailAlreadyUsed");
+    expect(localStorage.getItem("token")).toBeNull();
+  });
+
   it("asks Google registrants to choose User or Care Giver before creating their account", async () => {
     fetch.mockResolvedValue(jsonResponse({ token: "caregiver-token", user: { role: "babysitter" } }));
     renderWithRouter(<Register />);
