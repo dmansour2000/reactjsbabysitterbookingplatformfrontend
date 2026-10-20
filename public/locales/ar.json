@@ -310,5 +310,13 @@
   "socialProviderLoadError": "تعذر تحميل خدمة تسجيل الدخول. تحققي من الاتصال وحاولي مرة أخرى.",
   "socialAuthError": "تعذر تسجيل الدخول باستخدام هذا الحساب. حاولي مرة أخرى أو استخدمي البريد الإلكتروني وكلمة المرور.",
   "socialAccountConflict": "هذا البريد الإلكتروني مرتبط بحساب آخر. سجّلي الدخول إلى ذلك الحساب أولاً.",
+  "socialAccountNotFound": "لا يوجد حساب مرتبط بحساب Google هذا. سجّلي حساباً جديداً أولاً.",
+  "completeGoogleRegistration": "أكملي إنشاء حسابك في كير نست",
+  "chooseAccountType": "اختاري طريقة استخدامك لكير نست",
+  "googleAccountEmail": "حساب Google",
+  "accountType": "أرغب في الانضمام إلى كير نست بصفة",
+  "completeRegistration": "متابعة",
+  "backToRegistration": "العودة إلى التسجيل",
+  "socialRegistrationError": "تعذر إكمال التسجيل عبر Google. حاولي مرة أخرى.",
   "homeHeroImageAlt": "رعاية ودعم للعائلات والأطفال وكبار السن."
 }

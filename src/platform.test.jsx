@@ -38,7 +38,14 @@ vi.mock("react-i18next", () => ({
 }));
 vi.mock("./i18n", () => ({ default: {} }));
 vi.mock("./AdUnit", () => ({ default: () => null }));
-vi.mock("./SocialAuth", () => ({ default: () => <div>Google sign-in</div> }));
+vi.mock("./SocialAuth", () => ({
+  default: ({ onRegistrationRequired }) => (
+    <button type="button" onClick={() => onRegistrationRequired?.({
+      registrationToken: "pending-google-token",
+      googleUser: { email: "caregiver@example.com", name: "Care Giver" },
+    })}>Google sign-in</button>
+  ),
+}));
 
 function CurrentPath() {
   const location = useLocation();
@@ -167,6 +174,23 @@ describe("authentication pages", () => {
     expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/user\/register$/), expect.objectContaining({ method: "POST" }));
     expect(localStorage.getItem("token")).toBe("new-token");
     expect(localStorage.getItem("role")).toBe("user");
+  });
+
+  it("asks Google registrants to choose User or Care Giver before creating their account", async () => {
+    fetch.mockResolvedValue(jsonResponse({ token: "caregiver-token", user: { role: "babysitter" } }));
+    renderWithRouter(<Register />);
+    fireEvent.click(screen.getByRole("button", { name: "Google sign-in" }));
+
+    expect(await screen.findByRole("heading", { name: "completeGoogleRegistration" })).toBeInTheDocument();
+    expect(screen.getByText(/caregiver@example.com/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("accountType"), { target: { value: "babysitter" } });
+    fireEvent.click(screen.getByRole("button", { name: "completeRegistration" }));
+
+    await waitFor(() => expect(screen.getByTestId("current-path")).toHaveTextContent("/edit-profile"));
+    expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/api\/user\/oauth\/complete-registration$/), expect.objectContaining({
+      method: "POST",
+      body: JSON.stringify({ registrationToken: "pending-google-token", role: "babysitter" }),
+    }));
   });
 
   it("sends a forgotten-password request and displays the success state", async () => {

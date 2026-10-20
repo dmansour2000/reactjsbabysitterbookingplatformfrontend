@@ -311,5 +311,13 @@
   "socialProviderLoadError": "Could not load the sign-in provider. Check your connection and try again.",
   "socialAuthError": "Could not sign in with this provider. Try again or use your email and password.",
   "socialAccountConflict": "This email is already linked to another account. Sign in to that account first.",
+  "socialAccountNotFound": "No account is linked to this Google account yet. Register first.",
+  "completeGoogleRegistration": "Complete your CareNest account",
+  "chooseAccountType": "Choose how you want to use CareNest",
+  "googleAccountEmail": "Google account",
+  "accountType": "I want to join CareNest as a",
+  "completeRegistration": "Continue",
+  "backToRegistration": "Back to registration",
+  "socialRegistrationError": "Could not complete Google registration. Please try again.",
   "homeHeroImageAlt": "Care and support for families, children, and older adults."
 }

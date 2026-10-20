@@ -79,7 +79,7 @@ async function issueNonce(provider) {
   return data.nonce;
 }
 
-export default function SocialAuth({ role = "user", onAuthenticated }) {
+export default function SocialAuth({ role = "user", flow = "login", onAuthenticated, onRegistrationRequired }) {
   const { t, i18n } = useTranslation();
   const googleButton = useRef(null);
   const [error, setError] = useState("");
@@ -93,9 +93,13 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
       const response = await fetch(apiUrl("/api/user/oauth"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ provider, credential, role, name, nonce }),
+        body: JSON.stringify({ provider, credential, role, flow, name, nonce }),
       });
       const data = await response.json().catch(() => ({}));
+      if (response.ok && data.registrationRequired && data.registrationToken) {
+        onRegistrationRequired?.(data);
+        return true;
+      }
       if (!response.ok || !data.token || !data.user?.role) {
         const errorKey = {
           "Email is already registered to another account": "socialAccountConflict",
@@ -103,6 +107,7 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
           "Google credential nonce does not match this sign-in attempt": "socialNonceMismatch",
           "Google credential could not be verified. Check the configured Google client ID.": "googleClientMismatch",
           "Google account email is not verified": "socialEmailUnverified",
+          "No account was found for this Google account. Register first.": "socialAccountNotFound",
         }[data.msg] || "socialAuthError";
         throw new Error(errorKey);
       }

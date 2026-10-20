@@ -16,6 +16,10 @@ function Register() {
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [googleRegistration, setGoogleRegistration] = useState(null);
+  const [googleRole, setGoogleRole] = useState("user");
+  const [googleRegistrationError, setGoogleRegistrationError] = useState("");
+  const [isCompletingGoogleRegistration, setIsCompletingGoogleRegistration] = useState(false);
 
   const completeRegistration = (data) => {
     localStorage.setItem("token", data.token);
@@ -53,6 +57,59 @@ function Register() {
       setIsSubmitting(false);
     }
   };
+
+  const finishGoogleRegistration = async (event) => {
+    event.preventDefault();
+    if (!googleRegistration?.registrationToken || isCompletingGoogleRegistration) return;
+    setIsCompletingGoogleRegistration(true);
+    setGoogleRegistrationError("");
+
+    try {
+      const response = await fetch(apiUrl("/api/user/oauth/complete-registration"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          registrationToken: googleRegistration.registrationToken,
+          role: googleRole,
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.token || !data.user?.role) {
+        throw new Error("socialRegistrationError");
+      }
+      completeRegistration(data);
+    } catch (requestError) {
+      setGoogleRegistrationError(t(requestError.message || "socialRegistrationError"));
+    } finally {
+      setIsCompletingGoogleRegistration(false);
+    }
+  };
+
+  if (googleRegistration) {
+    return (
+      <div className="container">
+        <h1>{t("completeGoogleRegistration")}</h1>
+        <div className="parent" id="google-registration-completion">
+          <h2>{t("chooseAccountType")}</h2>
+          <p>{t("googleAccountEmail")}: {googleRegistration.googleUser?.email}</p>
+          <form onSubmit={finishGoogleRegistration}>
+            <label htmlFor="google-account-role">{t("accountType")}</label>
+            <select id="google-account-role" value={googleRole} onChange={(event) => setGoogleRole(event.target.value)}>
+              <option value="user">{t("user")}</option>
+              <option value="babysitter">{t("babysitter")}</option>
+            </select>
+            {googleRegistrationError && <p className="form-error" role="alert">{googleRegistrationError}</p>}
+            <button type="submit" disabled={isCompletingGoogleRegistration}>
+              {isCompletingGoogleRegistration ? t("registering") : t("completeRegistration")}
+            </button>
+          </form>
+          <button type="button" className="secondary-button" onClick={() => { setGoogleRegistration(null); setGoogleRegistrationError(""); }}>
+            {t("backToRegistration")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
@@ -114,7 +171,15 @@ function Register() {
             {isSubmitting ? t("registering") : t("register")}
           </button>
         </form>
-        <SocialAuth role={role} onAuthenticated={completeRegistration} />
+        <SocialAuth
+          role={role}
+          flow="register"
+          onAuthenticated={completeRegistration}
+          onRegistrationRequired={(pendingRegistration) => {
+            setGoogleRole(role);
+            setGoogleRegistration(pendingRegistration);
+          }}
+        />
         <p>{t("alreadyHaveAccount")}</p>
         <Link to="/login" data-i18n="loginHere">
           {t("loginHere")}
