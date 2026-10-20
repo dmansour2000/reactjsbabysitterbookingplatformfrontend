@@ -32,6 +32,7 @@ export default function SEO() {
     document.title = title;
     document.documentElement.lang = language;
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    setMeta("name", "google-adsense-account", "ca-pub-3496568058228119");
     setMeta("name", "description", description);
     setMeta("name", "robots", isPrivate ? "noindex,nofollow" : "index,follow,max-image-preview:large");
     setMeta("property", "og:type", "website");
