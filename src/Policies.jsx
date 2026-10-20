@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import AdUnit from "./AdUnit";
 
 function Policies() {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ function Policies() {
       <h3>{t("familyPolicyPrivacyHeading")}</h3><p>{t("familyPolicyPrivacy")}</p>
       <h3>{t("familyPolicyEnforcementHeading")}</h3><p>{t("familyPolicyEnforcement")}</p>
     </article>
+    <AdUnit />
   </main>;
 }
 

@@ -12,12 +12,17 @@ import BabysitterDetails from "./BabysitterDetails";
 import AdminPanel from "./AdminPanel";
 import AvailableBabysitters from "./AvailableBabysitters";
 import EditProfile from "./EditProfile";
+import MyProfile from "./MyProfile";
 import Home from "./Home"; // Login page component
 import About from "./About"; // About page component
 import Contact from "./Contact"; // Contact page component
 import Services from "./Services"; // Services page component
 import Bookings from "./Bookings";
 import Policies from "./Policies";
+import AccountSecurity from "./AccountSecurity";
+import PasswordRecovery from "./PasswordRecovery";
+import SEO from "./SEO";
+import careNestLogo from "./logo.svg";
 import "./App.css";
 import "./i18n";
 
@@ -40,6 +45,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     setRole(null);
+    window.location.assign(import.meta.env.BASE_URL);
   };
 
   return (
@@ -48,9 +54,13 @@ function App() {
         <button onClick={() => changeLanguage("en")}>English</button>
         <button onClick={() => changeLanguage("ar")}>عربي</button>
       </div>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
+        <SEO />
         <header className="app-header">
-          <Link className="brand" to="/">{t("brandName")}</Link>
+          <Link className="brand" to="/">
+            <img className="brand-logo" src={careNestLogo} alt="" aria-hidden="true" />
+            <span>{t("brandName")}</span>
+          </Link>
           <nav className="app-nav" aria-label={t("mainNavigation")}>
             <Link to="/">{t("home")}</Link>
             <Link to="/about">{t("aboutus")}</Link>
@@ -63,6 +73,7 @@ function App() {
             </>}
             {role === "babysitter" && <>
               <Link to="/bookings">{t("bookingRequests")}</Link>
+              <Link to="/my-profile">{t("myProfile")}</Link>
               <Link to="/edit-profile">{t("editProfile")}</Link>
             </>}
             {role === "admin" && <Link to="/admin-panel">{t("adminPanel")}</Link>}
@@ -71,14 +82,18 @@ function App() {
               <Link className="nav-signup" to="/register">{t("register")}</Link>
             </>}
             {role && <button className="nav-logout" onClick={logout}>{t("logout")}</button>}
+            {role && <Link to="/account-security">{t("accountSecurity")}</Link>}
           </nav>
         </header>
 
         {/* Routes */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={new URLSearchParams(window.location.search).has("token") ? <PasswordRecovery reset /> : <Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<PasswordRecovery />} />
+          <Route path="/reset-password" element={<PasswordRecovery reset />} />
+          <Route path="/account-security" element={<AccountSecurity />} />
           <Route path="/view-user/:id" element={<BabysitterDetails />} />
           <Route path="/bookings" element={<Bookings />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
@@ -87,6 +102,7 @@ function App() {
             element={<AvailableBabysitters />}
           />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />

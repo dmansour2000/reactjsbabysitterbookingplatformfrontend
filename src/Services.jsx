@@ -1,33 +1,52 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import "./i18n";
+import AdUnit from "./AdUnit";
+
+const serviceKeys = [
+  ["serviceApprovedProfilesTitle", "serviceApprovedProfilesDescription"],
+  ["serviceCareOptionsTitle", "serviceCareOptionsDescription"],
+  ["serviceBookingTitle", "serviceBookingDescription"],
+];
+
+const availableServiceKeys = [
+  ["babysitting", "serviceOptionBabysitting"],
+  ["cleaning", "serviceOptionCleaning"],
+  ["cooking", "serviceOptionCooking"],
+  ["elderlyCare", "serviceOptionElderlyCare"],
+];
 
 function Services() {
-  const { t, i18n } = useTranslation();
-  return (
-    <div>
-      <div id="Design">
-        <div id="Icons">
-          <img
-            id="Vector_Smart_Object_Doble_Clic_l"
-            src="imgs/Vector_Smart_Object_Doble_Clic_l.png"
-          ></img>
-        </div>
-      </div>
-      <div id="Image">
-        <img id="Your_Image_Here" src="imgs/Your_Image_Here.png"></img>
+  const { t } = useTranslation();
 
-        <img id="Layer_1" src="imgs/Layer_1.png"></img>
+  return (
+    <main className="container policy-page information-page">
+      <div className="page-heading">
+        <p className="eyebrow">{t("servicesEyebrow")}</p>
+        <h1>{t("servicesTitle")}</h1>
+        <p>{t("servicesIntro")}</p>
       </div>
-      <div id="Text">
-        <div id="Need_help_with_your_kid">
-          <span>{t("need-help-quality")}</span>
+      <section className="service-grid" aria-label={t("servicesTitle")}>
+        {serviceKeys.map(([titleKey, descriptionKey], index) => (
+          <article className="booking-panel service-panel" key={titleKey}>
+            <span className="service-number" aria-hidden="true">0{index + 1}</span>
+            <h2>{t(titleKey)}</h2>
+            <p>{t(descriptionKey)}</p>
+          </article>
+        ))}
+      </section>
+      <section className="available-services" aria-labelledby="available-services-title">
+        <h2 id="available-services-title">{t("availableServiceOptions")}</h2>
+        <div className="available-service-grid">
+          {availableServiceKeys.map(([serviceKey, descriptionKey]) => (
+            <article className="available-service-card" key={serviceKey}>
+              <h3>{t(serviceKey)}</h3>
+              <p>{t(descriptionKey)}</p>
+            </article>
+          ))}
         </div>
-        <div id="Babysitter">
-          <span>{t("services")}</span>
-        </div>
-      </div>
-    </div>
+      </section>
+      <AdUnit />
+    </main>
   );
 }
 

@@ -2,16 +2,45 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { apiUrl } from "./api";
+import AdUnit from "./AdUnit";
 
-const services = ["babysitting", "cleaning", "cooking", "studying"];
+const services = ["babysitting", "cleaning", "cooking", "elderlyCare"];
+
+function normalizeSearchText(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, "")
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ة/g, "ه")
+    .trim();
+}
+
+function localizeNationality(nationality, language, t) {
+  if (!nationality || !language.startsWith("ar")) return nationality || t("nationalityNotListed");
+  const key = nationality.toLowerCase().trim().replaceAll(" ", "_");
+  const translated = t(`nationality_${key}`);
+  return translated === `nationality_${key}` ? nationality : translated;
+}
 
 function AvailableBabysitters() {
   const [babysitters, setBabysitters] = useState([]);
+  const [egyptDistricts, setEgyptDistricts] = useState([]);
   const [search, setSearch] = useState("");
   const [service, setService] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.BASE_URL}egypt-districts.json`, { signal: controller.signal })
+      .then((response) => response.ok ? response.json() : [])
+      .then((data) => { if (Array.isArray(data)) setEgyptDistricts(data); })
+      .catch((loadError) => { if (loadError.name !== "AbortError") setEgyptDistricts([]); });
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -22,12 +51,12 @@ function AvailableBabysitters() {
         });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !Array.isArray(data)) {
-          throw new Error(data.msg || t("loadSittersError"));
+          throw new Error(t("loadSittersError"));
         }
         setBabysitters(data);
       } catch (loadError) {
         if (loadError.name !== "AbortError") {
-          setError(loadError.message || t("loadSittersError"));
+          setError(t("loadSittersError"));
         }
       } finally {
         if (!controller.signal.aborted) setLoading(false);
@@ -38,15 +67,31 @@ function AvailableBabysitters() {
   }, [t]);
 
   const visibleSitters = useMemo(() => {
-    const term = search.trim().toLocaleLowerCase();
+    const term = normalizeSearchText(search);
     return babysitters.filter((sitter) => {
-      const matchesSearch = !term || [sitter.name, sitter.nationality]
+      const matchesSearch = !term || [
+        sitter.name,
+        sitter.nationality,
+        localizeNationality(sitter.nationality, i18n.language, t),
+      ]
         .filter(Boolean)
-        .some((value) => value.toLocaleLowerCase().includes(term));
+        .some((value) => normalizeSearchText(value).includes(term));
       const matchesService = !service || sitter.services?.includes(service);
       return matchesSearch && matchesService;
     });
-  }, [babysitters, search, service]);
+  }, [babysitters, i18n.language, search, service, t]);
+
+  const localizeCity = (city) => {
+    if (!city || !i18n.language.startsWith("ar")) return city;
+    const normalizedCity = city.trim().toLocaleLowerCase();
+    const match = egyptDistricts.find((district) => {
+      const fullName = `${district.name.en}, ${district.parent.name.en}`.toLocaleLowerCase();
+      return normalizedCity === fullName
+        || normalizedCity === district.name.en.toLocaleLowerCase()
+        || normalizedCity === district.name.local.toLocaleLowerCase();
+    });
+    return match ? `${match.name.local}، ${match.parent.name.local}` : city;
+  };
 
   return (
     <main className="container marketplace">
@@ -90,15 +135,15 @@ function AvailableBabysitters() {
             {sitter.photoUrl ? <img className="sitter-avatar" src={apiUrl(sitter.photoUrl)} alt={sitter.name} /> : <div className="sitter-avatar" aria-hidden="true">{(sitter.name || "?").slice(0, 1).toLocaleUpperCase()}</div>}
             <div className="sitter-card-content">
               <h2>{sitter.name}</h2>
-              <p className="muted">{sitter.nationality || t("nationalityNotListed")}</p>
-              {sitter.city && <p>{sitter.city}</p>}
-              {sitter.age && <p>{t("age")}: {sitter.age}</p>}
-              {sitter.monthlySalary != null && <p className="rate-label">{sitter.monthlySalary.toLocaleString()} {sitter.currency || "EGP"} {t("perMonth")}</p>}
+              <p className="muted" dir="auto">{localizeNationality(sitter.nationality, i18n.language, t)}</p>
+              {sitter.city && <p dir="auto">{localizeCity(sitter.city)}</p>}
+              {sitter.age && <p dir="auto"><span>{t("age")}: </span><bdi>{sitter.age}</bdi></p>}
+              {sitter.monthlySalary != null && <p className="rate-label" dir="auto"><bdi>{sitter.monthlySalary.toLocaleString()} {sitter.currency || "EGP"}</bdi> {t("perMonth")}</p>}
               <div className="tag-list">
-                {(sitter.services || []).map((item) => (
+                {(sitter.services || []).filter((item) => item !== "studying").map((item) => (
                   <span className="service-tag" key={item}>{t(item)}</span>
                 ))}
-                {(!sitter.services || sitter.services.length === 0) && (
+                {!(sitter.services || []).some((item) => item !== "studying") && (
                   <span className="muted">{t("servicesNotListed")}</span>
                 )}
               </div>
@@ -109,6 +154,7 @@ function AvailableBabysitters() {
           </article>
         ))}
       </div>
+      <AdUnit />
     </main>
   );
 }

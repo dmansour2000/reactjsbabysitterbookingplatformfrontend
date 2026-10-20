@@ -1,35 +1,40 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import AdUnit from "./AdUnit";
 import "./i18n";
 
 function Home() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
-    <div>
-      <div id="Design">
-        <div id="Icons">
+    <main className="home-page">
+      <section className="home-hero" aria-labelledby="home-title">
+        <div className="home-visuals" aria-hidden="true">
           <img
-            id="Vector_Smart_Object_Doble_Clic_l"
-            src="imgs/Vector_Smart_Object_Doble_Clic_l.png"
-          ></img>
+            className="home-family-visual"
+            src={`${import.meta.env.BASE_URL}imgs/Your_Image_Here.png`}
+            alt=""
+          />
+          <img
+            className="home-caregiver-visual"
+            src={`${import.meta.env.BASE_URL}imgs/Layer_1.png`}
+            alt=""
+          />
         </div>
-      </div>
-      <div id="Image">
-        <img id="Your_Image_Here" src="imgs/Your_Image_Here.png"></img>
 
-        <img id="Layer_1" src="imgs/Layer_1.png"></img>
-      </div>
-      <div id="Text">
-        <div id="home-intro"><span>{t("homeIntro")}</span></div>
-        <div id="Need_help_with_your_kid">
-          <span>{t("need-help")}</span>
+        <div className="home-copy">
+          <img
+            className="home-icons"
+            src={`${import.meta.env.BASE_URL}imgs/Vector_Smart_Object_Doble_Clic_l.png`}
+            alt=""
+            aria-hidden="true"
+          />
+          <h1 id="home-title">{t("need-help")}</h1>
+          <p>{t("homeIntro")}</p>
         </div>
-        <div id="Babysitter">
-          <span>{t("babysitter")}</span>
-        </div>
-      </div>
-    </div>
+      </section>
+      <AdUnit />
+    </main>
   );
 }
 

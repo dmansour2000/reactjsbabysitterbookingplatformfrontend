@@ -1,33 +1,26 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import "./i18n";
+import AdUnit from "./AdUnit";
 
 function Contact() {
-  const { t, i18n } = useTranslation();
-  return (
-    <div>
-      <div id="Design">
-        <div id="Icons">
-          <img
-            id="Vector_Smart_Object_Doble_Clic_l"
-            src="imgs/Vector_Smart_Object_Doble_Clic_l.png"
-          ></img>
-        </div>
-      </div>
-      <div id="Image">
-        <img id="Your_Image_Here" src="imgs/Your_Image_Here.png"></img>
+  const { t } = useTranslation();
 
-        <img id="Layer_1" src="imgs/Layer_1.png"></img>
+  return (
+    <main className="container policy-page information-page">
+      <div className="page-heading">
+        <p className="eyebrow">{t("contactEyebrow")}</p>
+        <h1>{t("contactTitle")}</h1>
+        <p>{t("contactIntro")}</p>
       </div>
-      <div id="Text">
-        <div id="Need_help_with_your_kid">
-          <span>{t("kindly-contactus")}</span>
-        </div>
-        <div id="Babysitter">
-          <span>{t("contactus")}</span>
-        </div>
-      </div>
-    </div>
+      <section className="booking-panel contact-card" aria-labelledby="contact-email-heading">
+        <h2 id="contact-email-heading">{t("contactEmailHeading")}</h2>
+        <p>{t("contactEmailDescription")}</p>
+        <a className="contact-email" href="mailto:dinamansour2000@gmail.com">
+          dinamansour2000@gmail.com
+        </a>
+      </section>
+      <AdUnit />
+    </main>
   );
 }
 

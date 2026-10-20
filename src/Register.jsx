@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { apiUrl } from "./api";
+import SocialAuth from "./SocialAuth";
 import "./i18n";
 
 function Register() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("user");
@@ -14,6 +16,13 @@ function Register() {
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  const completeRegistration = (data) => {
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.user.role);
+    window.dispatchEvent(new Event("auth-change"));
+    navigate(data.user.role === "babysitter" ? "/edit-profile" : "/available-babysitters");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,24 +36,15 @@ function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password, name }),
+        body: JSON.stringify({ username, email, password, name }),
       });
 
       const data = await response.json().catch(() => ({}));
       if (response.ok) {
         if (!data.token) throw new Error("registrationFailed");
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("role", role);
-        window.dispatchEvent(new Event("auth-change"));
-
-        // Redirect based on the role
-        if (role === "babysitter") {
-          navigate("/edit-profile");
-        } else {
-          navigate("/available-babysitters"); // Redirect normal users to babysitters page
-        }
+        completeRegistration({ token: data.token, user: { role } });
       } else {
-        setError(data.msg || t("registrationFailed"));
+        setError(t("registrationFailed"));
       }
     } catch (error) {
       console.error("Error:", error);
@@ -68,6 +68,16 @@ function Register() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder={t("username")}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            autoComplete="email"
+            aria-label={t("email")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t("email")}
             required
           />
           <input
@@ -104,6 +114,7 @@ function Register() {
             {isSubmitting ? t("registering") : t("register")}
           </button>
         </form>
+        <SocialAuth role={role} onAuthenticated={completeRegistration} />
         <p>{t("alreadyHaveAccount")}</p>
         <Link to="/login" data-i18n="loginHere">
           {t("loginHere")}

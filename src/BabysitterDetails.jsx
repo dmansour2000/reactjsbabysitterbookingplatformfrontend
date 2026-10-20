@@ -3,14 +3,22 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { apiUrl } from "./api";
 
-function localDateTimeValue(date) {
+function dateInputValue(date) {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
     .toISOString()
-    .slice(0, 16);
+    .slice(0, 10);
+}
+
+function minimumBookingDate() {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  return dateInputValue(date);
 }
 
 function BabysitterDetails() {
   const [babysitter, setBabysitter] = useState(null);
+  const [photoSource, setPhotoSource] = useState("");
+  const [photoOpen, setPhotoOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [bookingError, setBookingError] = useState("");
@@ -41,12 +49,12 @@ function BabysitterDetails() {
         });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !data?._id) {
-          throw new Error(data.msg || t("loadProfileError"));
+          throw new Error(t("loadProfileError"));
         }
         setBabysitter(data);
-        setService(data.services?.[0] || "");
+        setService(data.services?.find((item) => item !== "studying") || "");
       } catch (loadError) {
-        if (loadError.name !== "AbortError") setError(loadError.message || t("loadProfileError"));
+        if (loadError.name !== "AbortError") setError(t("loadProfileError"));
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }
@@ -54,6 +62,44 @@ function BabysitterDetails() {
     loadProfile();
     return () => controller.abort();
   }, [id, navigate, t, token]);
+
+  useEffect(() => {
+    if (!photoOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setPhotoOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [photoOpen]);
+
+  useEffect(() => {
+    if (!babysitter?.photoUrl) {
+      setPhotoSource("");
+      return undefined;
+    }
+    const controller = new AbortController();
+    let objectUrl = "";
+    setPhotoSource("");
+    fetch(apiUrl(babysitter.photoUrl), {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Profile photo request failed");
+        return response.blob();
+      })
+      .then((blob) => {
+        objectUrl = URL.createObjectURL(blob);
+        setPhotoSource(objectUrl);
+      })
+      .catch((photoError) => {
+        if (photoError.name !== "AbortError") setPhotoSource("");
+      });
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [babysitter?.photoUrl, token]);
 
   const submitBooking = async (event) => {
     event.preventDefault();
@@ -67,7 +113,7 @@ function BabysitterDetails() {
       setBookingError(t("parentAccountRequired"));
       return;
     }
-    if (!startAt || !endAt || new Date(endAt) <= new Date(startAt)) {
+    if (!startAt || !endAt || startAt < minimumBookingDate() || endAt < startAt) {
       setBookingError(t("chooseValidTime"));
       return;
     }
@@ -83,18 +129,18 @@ function BabysitterDetails() {
         body: JSON.stringify({
           babysitterId: babysitter._id,
           service,
-          startAt: new Date(startAt).toISOString(),
-          endAt: new Date(endAt).toISOString(),
+          startAt,
+          endAt,
           childrenCount: Number(childrenCount),
           notes,
         }),
       });
       const data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data.msg || t("bookingRequestError"));
+      if (!response.ok) throw new Error(t("bookingRequestError"));
       setBookingSent(true);
       setNotes("");
     } catch (requestError) {
-      setBookingError(requestError.message || t("bookingRequestError"));
+      setBookingError(t("bookingRequestError"));
     } finally {
       setSubmitting(false);
     }
@@ -110,13 +156,18 @@ function BabysitterDetails() {
       <section className="profile-card">
         <Link className="back-link" to="/available-babysitters">← {t("backToSitters")}</Link>
         <div className="profile-intro">
-          {babysitter.photoUrl ? <img className="sitter-avatar large" src={apiUrl(babysitter.photoUrl)} alt={babysitter.name} /> : <div className="sitter-avatar large" aria-hidden="true">{babysitter.name.slice(0, 1).toLocaleUpperCase()}</div>}
+          {photoSource
+            ? <button className="photo-open-button" type="button" onClick={() => setPhotoOpen(true)} aria-label={t("viewLargerPhoto", { name: babysitter.name })}>
+              <img className="sitter-avatar large" src={photoSource} alt={babysitter.name} />
+            </button>
+            : <div className="sitter-avatar large" aria-hidden="true">{babysitter.name.slice(0, 1).toLocaleUpperCase()}</div>}
           <div>
             <p className="eyebrow">{t("babysitterProfile")}</p>
             <h1>{babysitter.name}</h1>
             <p className={babysitter.available ? "availability available" : "availability unavailable"}>
               {babysitter.available ? t("availableForRequests") : t("notTakingRequests")}
             </p>
+            {babysitter.moderationStatus === "approved" && <p className="verification-badge">✓ {t("identityDocumentsReviewed")}</p>}
           </div>
         </div>
         <dl className="profile-facts">
@@ -124,11 +175,17 @@ function BabysitterDetails() {
           <div><dt>{t("nationality")}</dt><dd>{babysitter.nationality || t("notAvailable")}</dd></div>
           <div><dt>{t("city")}</dt><dd>{babysitter.city || t("notAvailable")}</dd></div>
           <div><dt>{t("monthlySalary")}</dt><dd>{babysitter.monthlySalary != null ? `${babysitter.monthlySalary.toLocaleString()} ${babysitter.currency || "EGP"} ${t("perMonth")}` : t("notAvailable")}</dd></div>
-          <div><dt>{t("phone")}</dt><dd>{babysitter.phone || t("notAvailable")}</dd></div>
-          <div><dt>{t("servicesProvided")}</dt><dd>{babysitter.services?.map((item) => t(item)).join(", ") || t("servicesNotListed")}</dd></div>
+          <div><dt>{t("servicesProvided")}</dt><dd>{babysitter.services?.filter((item) => item !== "studying").map((item) => t(item)).join(", ") || t("servicesNotListed")}</dd></div>
         </dl>
         {babysitter.bio && <p className="profile-bio">{babysitter.bio}</p>}
       </section>
+
+      {photoOpen && photoSource && <div className="photo-modal" role="presentation" onClick={() => setPhotoOpen(false)}>
+        <section className="photo-modal-content" role="dialog" aria-modal="true" aria-label={t("viewLargerPhoto", { name: babysitter.name })} onClick={(event) => event.stopPropagation()}>
+          <button className="photo-modal-close" type="button" onClick={() => setPhotoOpen(false)}>{t("close")}</button>
+          <img src={photoSource} alt={babysitter.name} />
+        </section>
+      </div>}
 
       {role === "user" && babysitter.available && (
         <section className="booking-panel">
@@ -145,12 +202,12 @@ function BabysitterDetails() {
           <form onSubmit={submitBooking}>
             <label htmlFor="booking-service">{t("service")}</label>
             <select id="booking-service" value={service} onChange={(event) => setService(event.target.value)} required>
-              {babysitter.services?.map((item) => <option key={item} value={item}>{t(item)}</option>)}
+              {babysitter.services?.filter((item) => item !== "studying").map((item) => <option key={item} value={item}>{t(item)}</option>)}
             </select>
             <label htmlFor="booking-start">{t("startDateTime")}</label>
-            <input id="booking-start" type="datetime-local" min={localDateTimeValue(new Date(Date.now() + 60_000))} value={startAt} onChange={(event) => setStartAt(event.target.value)} required />
+            <input id="booking-start" type="date" min={minimumBookingDate()} value={startAt} onChange={(event) => setStartAt(event.target.value)} required />
             <label htmlFor="booking-end">{t("endDateTime")}</label>
-            <input id="booking-end" type="datetime-local" min={startAt || undefined} value={endAt} onChange={(event) => setEndAt(event.target.value)} required />
+            <input id="booking-end" type="date" min={startAt || minimumBookingDate()} value={endAt} onChange={(event) => setEndAt(event.target.value)} required />
             <label htmlFor="children-count">{t("childrenCount")}</label>
             <input id="children-count" type="number" min="1" max="10" value={childrenCount} onChange={(event) => setChildrenCount(event.target.value)} required />
             <label htmlFor="booking-notes">{t("bookingNotes")}</label>
