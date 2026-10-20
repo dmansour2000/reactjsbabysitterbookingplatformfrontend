@@ -318,6 +318,19 @@ describe("caregiver search and booking flow", () => {
     expect(screen.getAllByText("moderation_pending")).toHaveLength(2);
   });
 
+  it("renders the caregiver's uploaded profile photo from its authenticated blob URL", async () => {
+    localStorage.setItem("token", "caregiver-token");
+    localStorage.setItem("role", "babysitter");
+    vi.stubGlobal("URL", { createObjectURL: vi.fn(() => "blob:caregiver-photo"), revokeObjectURL: vi.fn() });
+    fetch.mockImplementation((url) => Promise.resolve(String(url).endsWith("/api/babysitter/profile/photo")
+      ? jsonResponse({}, { blob: async () => new Blob(["image-data"], { type: "image/png" }) })
+      : jsonResponse({ name: "Mona", moderationStatus: "pending", verificationDocuments: {}, photoUrl: "/api/babysitter/profile/photo" })));
+
+    renderWithRouter(<MyProfile />);
+
+    expect(await screen.findByRole("img", { name: "profilePhotoAlt" })).toHaveAttribute("src", "blob:caregiver-photo");
+  });
+
   it("validates and saves caregiver profile details with the selected currency", async () => {
     localStorage.setItem("token", "caregiver-token");
     const districts = [{ id: "cairo-district", name: { en: "Cairo", local: "القاهرة" }, parent: { id: "cairo", name: { en: "Cairo", local: "القاهرة" } } }];

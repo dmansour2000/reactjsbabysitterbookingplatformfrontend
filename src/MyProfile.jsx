@@ -119,7 +119,7 @@ function MyProfile() {
       <section className="booking-panel own-profile-card">
         <div className="profile-intro">
           {photoUrl
-            ? <img className="sitter-avatar large own-profile-photo" src={apiUrl(photoUrl)} alt={t("profilePhotoAlt", { name })} />
+            ? <img className="sitter-avatar large own-profile-photo" src={photoUrl} alt={t("profilePhotoAlt", { name })} />
             : <div className="sitter-avatar large" aria-hidden="true">{name.slice(0, 1).toLocaleUpperCase()}</div>}
           <div>
             <p className="eyebrow">{t("babysitterProfile")}</p>
