@@ -25,6 +25,12 @@
   padding: 0.4rem 0.8rem;
 }
 
+.language-switcher button.active {
+  background: #683f80;
+  color: #fff;
+  font-weight: 700;
+}
+
 .app-header {
   position: relative;
   z-index: 20;

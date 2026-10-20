@@ -25,6 +25,10 @@ export const publicMetadata = {
     en: ["Find a Caregiver in Egypt | Care Nest", "Browse approved caregiver profiles in Egypt and request care that fits your family's needs."],
     ar: ["اعثروا على مقدمة رعاية في مصر | كير نست", "تصفحوا ملفات مقدمات الرعاية المعتمدة والمتاحات في مصر واطلبوا الرعاية المناسبة لعائلتكم."],
   },
+  "/blacklist": {
+    en: ["Caregiver Safety Reports | Care Nest", "View community safety reports reviewed by Care Nest admins in Egypt."],
+    ar: ["بلاغات سلامة مقدمي الرعاية | كير نست", "اطلعوا على بلاغات سلامة المجتمع التي راجعها مشرفو كير نست في مصر."],
+  },
 };
 
-export const privateRoutes = ["/login", "/register", "/forgot-password", "/reset-password", "/account-security", "/bookings", "/admin-panel", "/edit-profile", "/view-user"];
+export const privateRoutes = ["/login", "/register", "/forgot-password", "/reset-password", "/account-security", "/bookings", "/admin-panel", "/edit-profile", "/my-profile", "/view-user"];

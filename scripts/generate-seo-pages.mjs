@@ -15,6 +15,7 @@ const privatePageNames = {
   "/bookings": "حجوزات كير نست",
   "/admin-panel": "إدارة كير نست",
   "/edit-profile": "ملف جليسة الأطفال في كير نست",
+  "/my-profile": "الملف الشخصي في كير نست",
 };
 
 function escapeAttribute(value) {

@@ -52,8 +52,20 @@ function App() {
   return (
     <div id="Canvas" className="bg-img">
       <div className="language-switcher">
-        <button onClick={() => changeLanguage("en")}>English</button>
-        <button onClick={() => changeLanguage("ar")}>عربي</button>
+        <button
+          type="button"
+          className={(i18n.resolvedLanguage || i18n.language)?.startsWith("ar") ? "active" : ""}
+          onClick={() => changeLanguage("ar")}
+        >
+          عربي
+        </button>
+        <button
+          type="button"
+          className={(i18n.resolvedLanguage || i18n.language)?.startsWith("en") ? "active" : ""}
+          onClick={() => changeLanguage("en")}
+        >
+          English
+        </button>
       </div>
       <Router basename={import.meta.env.BASE_URL}>
         <SEO />
