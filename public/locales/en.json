@@ -249,6 +249,8 @@
   "removeProfile": "Remove profile",
   "moderationUpdateError": "Could not update this profile’s review status.",
   "documentLoadError": "Could not open this verification document.",
+  "download": "Download",
+  "openInNewTab": "Open in new tab",
   "confirmDeleteSitter": "Permanently remove this sitter profile and its account?",
   "deleteSitterError": "Could not remove this caregiver profile.",
   "users": "User accounts",

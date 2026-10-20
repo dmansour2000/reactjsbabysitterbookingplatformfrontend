@@ -1166,3 +1166,15 @@ html[dir="rtl"] .marketplace .tag-list {
     width: 100%;
   }
 }
+
+.document-viewer-modal {
+  position: relative;
+  width: min(100%, 860px);
+  max-height: 94vh;
+  overflow-y: auto;
+  padding: 3rem 1.5rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  background: #302343;
+  text-align: start;
+}

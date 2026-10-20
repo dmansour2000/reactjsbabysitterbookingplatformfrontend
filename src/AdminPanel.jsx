@@ -17,6 +17,7 @@ function AdminPanel() {
   const [deletingUserId, setDeletingUserId] = useState("");
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [newAdmin, setNewAdmin] = useState({ username: "", email: "", password: "" });
+  const [viewingDocument, setViewingDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -122,15 +123,49 @@ function AdminPanel() {
     } catch (_) { alert(t("moderationUpdateError")); }
   };
 
-  const openDocument = async (sitterId, kind) => {
+  const openDocument = async (sitterId, kind, title, sitterName) => {
     const token = localStorage.getItem("token");
+    setViewingDocument({
+      title: title || t(kind === "photo" ? "optionalPhoto" : kind),
+      sitterName: sitterName || "",
+      url: "",
+      isPdf: false,
+      loading: true,
+      error: "",
+    });
     try {
-      const response = await fetch(apiUrl(`/api/admin/babysitters/${sitterId}/documents/${kind}`), { headers: { Authorization: `Bearer ${token}` } });
-      if (!response.ok) { alert(t("documentLoadError")); return; }
-      const objectUrl = URL.createObjectURL(await response.blob());
-      window.open(objectUrl, "_blank", "noopener,noreferrer");
-      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
-    } catch (_) { alert(t("documentLoadError")); }
+      const response = await fetch(apiUrl(`/api/admin/babysitters/${sitterId}/documents/${kind}`), {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.msg || t("documentLoadError"));
+      }
+      const blob = await response.blob();
+      const contentType = response.headers.get("content-type") || blob.type || "";
+      const isPdf = contentType.toLowerCase().includes("pdf");
+      const objectUrl = URL.createObjectURL(blob);
+      setViewingDocument((prev) => (prev ? {
+        ...prev,
+        url: objectUrl,
+        isPdf,
+        loading: false,
+        error: "",
+      } : null));
+    } catch (err) {
+      setViewingDocument((prev) => (prev ? {
+        ...prev,
+        loading: false,
+        error: err.message || t("documentLoadError"),
+      } : null));
+    }
+  };
+
+  const closeDocumentViewer = () => {
+    if (viewingDocument?.url) {
+      URL.revokeObjectURL(viewingDocument.url);
+    }
+    setViewingDocument(null);
   };
 
   const removeSitter = async (sitterId) => {
@@ -177,17 +212,19 @@ function AdminPanel() {
   }, []);
 
   useEffect(() => {
-    if (!accountDetails && !reviewProfile && !userToDelete) return undefined;
+    if (!accountDetails && !reviewProfile && !userToDelete && !viewingDocument) return undefined;
     const closeOnEscape = (event) => {
       if (event.key === "Escape") {
         setAccountDetails(null);
         setReviewProfile(null);
         setUserToDelete(null);
+        if (viewingDocument?.url) URL.revokeObjectURL(viewingDocument.url);
+        setViewingDocument(null);
       }
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [accountDetails, reviewProfile, userToDelete]);
+  }, [accountDetails, reviewProfile, userToDelete, viewingDocument]);
 
   useEffect(() => {
     if (!reviewProfile?.verificationDocuments?.photo) {
@@ -242,7 +279,23 @@ function AdminPanel() {
           <h3>{sitter.name} <small>({sitter.userId?.username})</small></h3>
           <p>{t("moderationStatus")}: {t(`moderation_${sitter.moderationStatus || "pending"}`)}</p>
           <p>{t("nationalityType")}: {sitter.nationalityType === "other" ? t("otherNationality") : t("egyptian")}</p>
-          <div className="admin-document-links">{(sitter.nationalityType === "other" ? [["passport", "passportUpload"], ["residency", "residencyUpload"]] : [["nationalId", "nationalIdUpload"]]).map(([kind, label]) => <button type="button" disabled={!sitter.verificationDocuments?.[kind]} key={kind} onClick={() => openDocument(sitter._id, kind)}>{t(label)}{sitter.verificationDocuments?.[kind] ? " ✓" : ` · ${t("missing")}`}</button>)}</div>
+          <div className="admin-document-links">
+            {[
+              ["photo", "optionalPhoto"],
+              ...(sitter.nationalityType === "other"
+                ? [["passport", "passportUpload"], ["residency", "residencyUpload"]]
+                : [["nationalId", "nationalIdUpload"]])
+            ].map(([kind, label]) => (
+              <button
+                type="button"
+                disabled={!sitter.verificationDocuments?.[kind]}
+                key={kind}
+                onClick={() => openDocument(sitter._id, kind, t(label), sitter.name)}
+              >
+                {t(label)}{sitter.verificationDocuments?.[kind] ? " ✓" : ` · ${t("missing")}`}
+              </button>
+            ))}
+          </div>
           <button className="review-profile-button" type="button" onClick={() => setReviewProfile(sitter)}>{t("viewCaregiverProfile")}</button>
           <div className="form-actions">{sitter.moderationStatus !== "approved" && <button type="button" onClick={() => moderateSitter(sitter._id, "approved")}>{t("approve")}</button>}{sitter.moderationStatus !== "unapproved" && <button type="button" onClick={() => moderateSitter(sitter._id, "unapproved")}>{t("unapprove")}</button>}{sitter.moderationStatus !== "blacklisted" && <button type="button" onClick={() => moderateSitter(sitter._id, "blacklisted")}>{t("blacklist")}</button>}{isSuperAdmin && <button type="button" onClick={() => removeSitter(sitter._id)}>{t("removeProfile")}</button>}</div>
         </article>)}</div>}
@@ -277,8 +330,24 @@ function AdminPanel() {
           </section>
           <section className="caregiver-review-uploads">
             <h3>{t("uploadedDocuments")}</h3>
-            <p>{t("optionalPhoto")}: {reviewProfile.verificationDocuments?.photo ? t("uploaded") : t("missing")}</p>
             <p>{t("nationalityType")}: {reviewProfile.nationalityType === "other" ? t("otherNationality") : t("egyptian")}</p>
+            <div className="admin-document-links" style={{ marginTop: "0.75rem" }}>
+              {[
+                ["photo", "optionalPhoto"],
+                ...(reviewProfile.nationalityType === "other"
+                  ? [["passport", "passportUpload"], ["residency", "residencyUpload"]]
+                  : [["nationalId", "nationalIdUpload"]])
+              ].map(([kind, label]) => (
+                <button
+                  type="button"
+                  disabled={!reviewProfile.verificationDocuments?.[kind]}
+                  key={kind}
+                  onClick={() => openDocument(reviewProfile._id, kind, t(label), reviewProfile.name)}
+                >
+                  {t(label)}{reviewProfile.verificationDocuments?.[kind] ? " ✓" : ` · ${t("missing")}`}
+                </button>
+              ))}
+            </div>
           </section>
         </section>
       </div>}
@@ -342,7 +411,7 @@ function AdminPanel() {
                 <div><dt>{t("approvalStatus")}</dt><dd>{t(`moderation_${accountDetails.profile.moderationStatus || "pending"}`)}</dd></div>
               </dl>
               <h4>{t("uploadedDocuments")}</h4>
-              <div className="admin-document-links">{[["photo", "optionalPhoto"], ["nationalId", "nationalIdUpload"], ["passport", "passportUpload"], ["residency", "residencyUpload"]].map(([kind, label]) => <button key={kind} type="button" disabled={!accountDetails.documents?.[kind]} onClick={() => openDocument(accountDetails.profileId, kind)}>{t(label)}{accountDetails.documents?.[kind] ? " ✓" : ` · ${t("missing")}`}</button>)}</div>
+              <div className="admin-document-links">{[["photo", "optionalPhoto"], ["nationalId", "nationalIdUpload"], ["passport", "passportUpload"], ["residency", "residencyUpload"]].map(([kind, label]) => <button key={kind} type="button" disabled={!accountDetails.documents?.[kind]} onClick={() => openDocument(accountDetails.profileId, kind, t(label), accountDetails.user.name || accountDetails.user.username)}>{t(label)}{accountDetails.documents?.[kind] ? " ✓" : ` · ${t("missing")}`}</button>)}</div>
             </>}
           </section>}
         </>}
@@ -366,6 +435,73 @@ function AdminPanel() {
           <time dateTime={entry.createdAt}>{new Date(entry.createdAt).toLocaleString()}</time>
         </article>)}</div>}
       </section>
+
+      {viewingDocument && (
+        <div className="photo-modal account-details-backdrop" role="presentation" onClick={closeDocumentViewer}>
+          <section
+            className="document-viewer-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="doc-viewer-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="caregiver-profile-modal-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+              <div>
+                <h2 id="doc-viewer-title" style={{ margin: 0 }}>{viewingDocument.title}</h2>
+                {viewingDocument.sitterName && <p style={{ margin: "0.25rem 0 0", color: "#e2d9ea" }}>{viewingDocument.sitterName}</p>}
+              </div>
+              <button className="photo-modal-close" type="button" onClick={closeDocumentViewer}>
+                {t("close")}
+              </button>
+            </div>
+
+            <div className="document-viewer-content" style={{ minHeight: "280px", display: "grid", placeItems: "center", margin: "1rem 0" }}>
+              {viewingDocument.loading && <p>{t("loading")}</p>}
+              {viewingDocument.error && <p className="form-error" role="alert">{viewingDocument.error}</p>}
+              {!viewingDocument.loading && !viewingDocument.error && viewingDocument.url && (
+                viewingDocument.isPdf ? (
+                  <iframe
+                    src={viewingDocument.url}
+                    title={viewingDocument.title}
+                    style={{ width: "100%", height: "65vh", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "8px", background: "#fff" }}
+                  />
+                ) : (
+                  <img
+                    src={viewingDocument.url}
+                    alt={viewingDocument.title}
+                    style={{ maxWidth: "100%", maxHeight: "65vh", objectFit: "contain", borderRadius: "8px" }}
+                  />
+                )
+              )}
+            </div>
+
+            {!viewingDocument.loading && !viewingDocument.error && viewingDocument.url && (
+              <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end", flexWrap: "wrap", marginTop: "1rem" }}>
+                <a
+                  href={viewingDocument.url}
+                  download={`${viewingDocument.sitterName || "caregiver"}-${viewingDocument.title}.${viewingDocument.isPdf ? "pdf" : "jpg"}`}
+                  className="secondary-button"
+                  style={{ display: "inline-block", padding: "0.6rem 1rem", borderRadius: "8px", textDecoration: "none" }}
+                >
+                  {t("download")}
+                </a>
+                <a
+                  href={viewingDocument.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="secondary-button"
+                  style={{ display: "inline-block", padding: "0.6rem 1rem", borderRadius: "8px", textDecoration: "none" }}
+                >
+                  {t("openInNewTab")}
+                </a>
+                <button type="button" onClick={closeDocumentViewer}>
+                  {t("close")}
+                </button>
+              </div>
+            )}
+          </section>
+        </div>
+      )}
     </div>
   );
 }

@@ -249,6 +249,8 @@
   "removeProfile": "حذف الملف",
   "moderationUpdateError": "تعذر تحديث حالة مراجعة الملف.",
   "documentLoadError": "تعذر فتح مستند التحقق.",
+  "download": "تنزيل",
+  "openInNewTab": "فتح في علامة تبويب جديدة",
   "confirmDeleteSitter": "هل تريد حذف ملف مقدمة الرعاية وحسابها نهائياً؟",
   "deleteSitterError": "تعذر حذف ملف مقدمة الرعاية.",
   "users": "حسابات المستخدمين",
