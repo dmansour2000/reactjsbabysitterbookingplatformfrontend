@@ -303,6 +303,7 @@
   "socialSignIn": "Social sign-in",
   "orContinueWith": "Or continue with",
   "continueWithGoogle": "Continue with Google",
+  "loadingGoogleSignIn": "Loading Google sign-in…",
   "signingIn": "Signing in…",
   "socialAuthNotConfigured": "Google sign-in is not configured. Configure a Google web client ID to enable this option.",
   "socialProviderLoadError": "Could not load the sign-in provider. Check your connection and try again.",

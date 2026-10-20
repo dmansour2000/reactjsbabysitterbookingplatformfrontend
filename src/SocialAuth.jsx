@@ -4,18 +4,30 @@ import { apiUrl } from "./api";
 import "./i18n";
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "146671912539-sctdecp31oeebjq3868adrj9eqbsjl33.apps.googleusercontent.com";
+let googleScriptPromise;
 
 function loadScript(src, id) {
-  if (document.getElementById(id)) return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.id = id;
-    script.src = src;
-    script.async = true;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
+  if (window.google?.accounts?.id) return Promise.resolve();
+  if (googleScriptPromise) return googleScriptPromise;
+
+  googleScriptPromise = new Promise((resolve, reject) => {
+    const existingScript = document.getElementById(id);
+    const script = existingScript || document.createElement("script");
+    script.addEventListener("load", resolve, { once: true });
+    script.addEventListener("error", reject, { once: true });
+
+    if (!existingScript) {
+      script.id = id;
+      script.src = src;
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }).catch((error) => {
+    googleScriptPromise = undefined;
+    throw error;
   });
+
+  return googleScriptPromise;
 }
 
 async function issueNonce(provider) {
@@ -61,7 +73,8 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
     if (googleClientId) {
       loadScript("https://accounts.google.com/gsi/client", "google-identity-services")
         .then(async () => {
-          if (!active || !window.google?.accounts?.id || !googleButton.current) return;
+          if (!active || !googleButton.current) return;
+          if (!window.google?.accounts?.id) throw new Error("socialProviderLoadError");
           const renderGoogleButton = (nonce) => {
             if (!active || !googleButton.current) return;
             googleButton.current.innerHTML = "";
@@ -101,7 +114,7 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
     <div className="social-auth-divider"><span>{t("orContinueWith")}</span></div>
     <div className="social-auth-buttons">
       <div className="google-auth-button" ref={googleButton} aria-label={t("continueWithGoogle")} />
-      {!ready && <button type="button" className="social-auth-fallback" disabled>{t("continueWithGoogle")}</button>}
+      {!ready && <span className="social-auth-loading" role="status">{t("loadingGoogleSignIn")}</span>}
     </div>
     {error && <p className="form-error" role="alert">{error}</p>}
   </section>;

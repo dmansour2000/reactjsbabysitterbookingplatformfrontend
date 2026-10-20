@@ -302,6 +302,7 @@
   "socialSignIn": "تسجيل الدخول عبر الحسابات الاجتماعية",
   "orContinueWith": "أو المتابعة باستخدام",
   "continueWithGoogle": "المتابعة باستخدام Google",
+  "loadingGoogleSignIn": "جارٍ تحميل تسجيل الدخول عبر Google…",
   "signingIn": "جارٍ تسجيل الدخول…",
   "socialAuthNotConfigured": "تسجيل الدخول عبر Google غير مهيأ. أعدّي معرّف عميل Google لتفعيل هذا الخيار.",
   "socialProviderLoadError": "تعذر تحميل خدمة تسجيل الدخول. تحققي من الاتصال وحاولي مرة أخرى.",

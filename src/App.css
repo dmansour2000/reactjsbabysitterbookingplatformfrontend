@@ -310,9 +310,9 @@ html[dir="rtl"] .booking-approval-actions .booking-action-hint { direction: rtl;
 .social-auth-divider { display: flex; align-items: center; gap: .75rem; margin: 1rem 0; color: #5d4d60; }
 .social-auth-divider::before, .social-auth-divider::after { content: ""; height: 1px; flex: 1; background: #d8c9d9; }
 .social-auth-buttons { display: grid; gap: .7rem; justify-items: center; }
-.google-auth-button, .google-auth-button > div { width: 100%; max-width: 360px; min-height: 42px; }
-.social-auth-fallback { width: 100%; max-width: 360px; min-height: 42px; margin: 0; border: 1px solid #333; border-radius: 5px; background: #fff; color: #202124; font-weight: 600; }
-.social-auth-fallback:disabled { cursor: wait; opacity: .7; }
+.google-auth-button { display: flex; justify-content: center; width: 100%; min-height: 44px; }
+.google-auth-button > div { max-width: 100%; }
+.social-auth-loading { display: block; min-height: 44px; color: #5d4d60; font-size: .9rem; line-height: 44px; text-align: center; }
 .empty-state .primary-link { margin-top: 1rem; }
 
 @media (max-width: 720px) {
