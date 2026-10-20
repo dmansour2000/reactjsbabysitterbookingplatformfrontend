@@ -18,6 +18,18 @@ const fallbackMessages = {
     en: "Could not connect to the sign-in service. Check that the backend is awake and try again.",
     ar: "تعذر الاتصال بخدمة تسجيل الدخول. تأكدي من عمل الخادم ثم حاولي مرة أخرى.",
   },
+  socialNonceMismatch: {
+    en: "Google could not confirm this sign-in attempt. Please retry.",
+    ar: "تعذر تأكيد محاولة تسجيل الدخول عبر Google. حاولي مرة أخرى.",
+  },
+  googleClientMismatch: {
+    en: "Google rejected this account. Check that the frontend and backend use the same Google client ID.",
+    ar: "رفضت Google هذا الحساب. تأكدي من تطابق معرّف العميل في الواجهة والخادم.",
+  },
+  socialEmailUnverified: {
+    en: "Use a Google account with a verified email address.",
+    ar: "استخدمي حساب Google ببريد إلكتروني تم التحقق منه.",
+  },
 };
 
 function socialText(t, key, language) {
@@ -85,12 +97,19 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.token || !data.user?.role) {
-        throw new Error(data.msg === "Email is already registered to another account" ? "socialAccountConflict" : "socialAuthError");
+        const errorKey = {
+          "Email is already registered to another account": "socialAccountConflict",
+          "Google sign-in nonce is invalid or expired": "socialNonceError",
+          "Google credential nonce does not match this sign-in attempt": "socialNonceMismatch",
+          "Google credential could not be verified. Check the configured Google client ID.": "googleClientMismatch",
+          "Google account email is not verified": "socialEmailUnverified",
+        }[data.msg] || "socialAuthError";
+        throw new Error(errorKey);
       }
       onAuthenticated(data);
       return true;
     } catch (requestError) {
-      setError(t(requestError.message || "socialAuthError"));
+      setError(socialText(t, requestError.message || "socialAuthError", i18n.resolvedLanguage));
       return false;
     }
   };
