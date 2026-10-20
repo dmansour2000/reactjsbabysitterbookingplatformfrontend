@@ -5,6 +5,25 @@ import "./i18n";
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "146671912539-sctdecp31oeebjq3868adrj9eqbsjl33.apps.googleusercontent.com";
 let googleScriptPromise;
+const fallbackMessages = {
+  loadingGoogleSignIn: {
+    en: "Loading Google sign-in…",
+    ar: "جارٍ تحميل تسجيل الدخول عبر Google…",
+  },
+  retryGoogleSignIn: {
+    en: "Retry Google sign-in",
+    ar: "إعادة محاولة تسجيل الدخول عبر Google",
+  },
+  socialNonceError: {
+    en: "Could not connect to the sign-in service. Check that the backend is awake and try again.",
+    ar: "تعذر الاتصال بخدمة تسجيل الدخول. تأكدي من عمل الخادم ثم حاولي مرة أخرى.",
+  },
+};
+
+function socialText(t, key, language) {
+  const languageCode = language?.startsWith("ar") ? "ar" : "en";
+  return t(key, { defaultValue: fallbackMessages[key]?.[languageCode] || key });
+}
 
 function loadScript(src, id) {
   if (window.google?.accounts?.id) return Promise.resolve();
@@ -92,7 +111,7 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
                 const authenticated = await authenticate("google", credential, "", nonce);
                 if (!authenticated && active) {
                   try { renderGoogleButton(await issueNonce("google")); }
-                  catch (nonceError) { setError(t(nonceError.message || "socialProviderLoadError")); }
+          catch (nonceError) { setError(socialText(t, nonceError.message || "socialProviderLoadError", i18n.resolvedLanguage)); }
                 }
               },
               nonce,
@@ -108,7 +127,7 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
           };
           renderGoogleButton(await issueNonce("google"));
         })
-        .catch((loadError) => setError(t(loadError.message || "socialProviderLoadError")));
+        .catch((loadError) => setError(socialText(t, loadError.message || "socialProviderLoadError", i18n.resolvedLanguage)));
     }
     return () => { active = false; };
   }, [i18n.resolvedLanguage, retryCount, t]);
@@ -122,9 +141,9 @@ export default function SocialAuth({ role = "user", onAuthenticated }) {
     <div className="social-auth-divider"><span>{t("orContinueWith")}</span></div>
     <div className="social-auth-buttons">
       <div className="google-auth-button" ref={googleButton} aria-label={t("continueWithGoogle")} />
-      {!ready && !error && <span className="social-auth-loading" role="status">{t("loadingGoogleSignIn")}</span>}
+      {!ready && !error && <span className="social-auth-loading" role="status">{socialText(t, "loadingGoogleSignIn", i18n.resolvedLanguage)}</span>}
     </div>
     {error && <p className="form-error" role="alert">{error}</p>}
-    {error && <button type="button" className="social-auth-retry" onClick={() => { setError(""); setRetryCount((count) => count + 1); }}>{t("retryGoogleSignIn")}</button>}
+    {error && <button type="button" className="social-auth-retry" onClick={() => { setError(""); setRetryCount((count) => count + 1); }}>{socialText(t, "retryGoogleSignIn", i18n.resolvedLanguage)}</button>}
   </section>;
 }

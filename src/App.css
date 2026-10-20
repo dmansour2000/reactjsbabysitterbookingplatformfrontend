@@ -567,6 +567,12 @@ textarea::placeholder {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+.app-nav a.nav-signup,
+.app-nav a.nav-signup:hover,
+.app-nav a.nav-signup:focus-visible {
+  color: #fff;
+}
+
 .service-tag,
 .sitter-avatar {
   background: #65476d;
