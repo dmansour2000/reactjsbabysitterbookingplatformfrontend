@@ -43,6 +43,7 @@
   "editProfile": "تعديل الملف الشخصي",
   "mobilePhone": "رقم الهاتف المحمول",
   "age": "العمر",
+  "ageOptional": "العمر (اختياري)",
   "nationality": "الجنسية",
   "servicesProvided": "الخدمات المقدمة",
   "cleaning": "تنظيف",
