@@ -349,8 +349,8 @@ textarea {
 .booking-approval-actions .booking-action-hint { flex-basis: auto; text-align: start; }
 html[dir="rtl"] .booking-approval-actions,
 html[dir="rtl"] .booking-approval-actions .booking-action-hint { direction: rtl; text-align: right; }
-.secondary-button { border: 1.5px solid #683f80; background: transparent; color: #683f80; }
-.secondary-button:hover { background: #f5ebfa; color: #58326e; }
+.secondary-button { border: 1.5px solid #683f80; background: #fbf0f9; color: #683f80; }
+.secondary-button:hover { background: #f5ebfa; color: #4a225d; }
 
 .social-auth { margin-top: 1.25rem; }
 .social-auth-divider { display: flex; align-items: center; gap: .75rem; margin: 1rem 0; color: #5d4d60; }
@@ -921,7 +921,7 @@ form button:hover:not(:disabled):not(.secondary-button) *,
   fill: #ffffff !important;
 }
 
-/* Secondary / outline buttons */
+/* Secondary / outline buttons with very light pink background and purple font */
 .secondary-button,
 button.secondary-button,
 form button.secondary-button,
@@ -929,7 +929,7 @@ form button.secondary-button,
 .booking-panel button.secondary-button,
 .blacklist-actions button.secondary-button,
 .confirmation-actions button.secondary-button {
-  background: transparent !important;
+  background: #fbf0f9 !important;
   border: 1.5px solid #683f80 !important;
   color: #683f80 !important;
   fill: #683f80 !important;
@@ -943,8 +943,8 @@ form button.secondary-button:hover:not(:disabled),
 .blacklist-actions button.secondary-button:hover:not(:disabled),
 .confirmation-actions button.secondary-button:hover:not(:disabled) {
   background: #f5ebfa !important;
-  color: #58326e !important;
-  fill: #58326e !important;
+  color: #4a225d !important;
+  fill: #4a225d !important;
 }
 
 /* Danger buttons */
@@ -978,32 +978,96 @@ form button:disabled,
   opacity: 0.8 !important;
 }
 
-/* Wherever there is any pink button or background, make the font on top of it white */
-.pink-button,
-.pink-bg,
-.bg-pink,
-[style*="pink"],
+/* Buttons with a very light pink background: font color is purple */
+.secondary-button,
+button.secondary-button,
+form button.secondary-button,
+.booking-card button.secondary-button,
+.booking-panel button.secondary-button,
+.blacklist-actions button.secondary-button,
+.confirmation-actions button.secondary-button,
+.button-light-pink,
+button.button-light-pink,
+.light-pink-btn,
+button.light-pink-btn,
+button[style*="#fdf2f8"],
+button[style*="#fce7f3"],
+button[style*="#fbcfe8"],
+button[style*="#f5e6f1"],
+button[style*="#f5ebfa"],
+button[style*="#f1d7ef"],
+button[style*="#f3e5f4"],
+button[style*="#f8eef8"],
+button[style*="#fbf0f9"],
+button[style*="#ffe4e6"],
+button[style*="#fee2e2"],
+button[style*="#fff0f5"],
+button[style*="rgba(217, 84, 178, 0.1)"],
+button[style*="rgba(217, 84, 178, 0.15)"],
+button[style*="rgba(241, 162, 210, 0.2)"] {
+  color: #683f80 !important;
+  fill: #683f80 !important;
+}
+
+.secondary-button *,
+button.secondary-button *,
+.button-light-pink *,
+button.button-light-pink *,
+.light-pink-btn *,
+button.light-pink-btn *,
+button[style*="#fdf2f8"] *,
+button[style*="#fce7f3"] *,
+button[style*="#fbcfe8"] *,
+button[style*="#f5e6f1"] *,
+button[style*="#f5ebfa"] *,
+button[style*="#f1d7ef"] *,
+button[style*="#f3e5f4"] *,
+button[style*="#f8eef8"] *,
+button[style*="#fbf0f9"] *,
+button[style*="#ffe4e6"] *,
+button[style*="#fee2e2"] *,
+button[style*="#fff0f5"] * {
+  color: #683f80 !important;
+  fill: #683f80 !important;
+}
+
+.secondary-button:hover:not(:disabled),
+button.secondary-button:hover:not(:disabled),
+form button.secondary-button:hover:not(:disabled),
+.button-light-pink:hover,
+button.button-light-pink:hover {
+  color: #4a225d !important;
+  fill: #4a225d !important;
+}
+
+/* Solid/saturated pink buttons: white font */
+.nav-signup,
+.app-nav .nav-signup,
+.app-nav a.nav-signup,
+.social-auth-fallback,
 [style*="#d954b2"],
 [style*="#c743a1"],
 [style*="#e779c9"],
 [style*="#c866b8"],
-button[style*="pink"],
 button[style*="#d954b2"],
-button[style*="#c743a1"] {
+button[style*="#c743a1"],
+button[style*="#e779c9"],
+button[style*="#c866b8"] {
   color: #ffffff !important;
 }
 
-.pink-button *,
-.pink-bg *,
-.bg-pink *,
-[style*="pink"] *,
+.nav-signup *,
+.app-nav .nav-signup *,
+.app-nav a.nav-signup *,
+.social-auth-fallback *,
 [style*="#d954b2"] *,
 [style*="#c743a1"] *,
 [style*="#e779c9"] *,
 [style*="#c866b8"] *,
-button[style*="pink"] *,
 button[style*="#d954b2"] *,
-button[style*="#c743a1"] * {
+button[style*="#c743a1"] *,
+button[style*="#e779c9"] *,
+button[style*="#c866b8"] * {
   color: #ffffff !important;
 }
 
