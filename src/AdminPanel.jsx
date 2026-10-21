@@ -15,7 +15,7 @@ function AdminPanel() {
   const [detailsError, setDetailsError] = useState("");
   const [userToDelete, setUserToDelete] = useState(null);
   const [deletingUserId, setDeletingUserId] = useState("");
-  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(() => localStorage.getItem("isSuperAdmin") === "true");
   const [newAdmin, setNewAdmin] = useState({ username: "", email: "", password: "" });
   const [viewingDocument, setViewingDocument] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,7 +72,7 @@ function AdminPanel() {
         setIsSuperAdmin(true);
       } else {
         setAdmins([]);
-        setIsSuperAdmin(false);
+        setIsSuperAdmin(localStorage.getItem("isSuperAdmin") === "true");
       }
     } catch (error) {
       console.error("Error:", error);

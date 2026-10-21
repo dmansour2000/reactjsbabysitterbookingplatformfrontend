@@ -82,6 +82,10 @@ function Blacklist() {
     setError("");
     setNotice("");
     if (!token || role !== "user") return;
+    if (!photo) {
+      setError(t("blacklistPhotoRequiredError"));
+      return;
+    }
     const body = new FormData();
     body.append("name", name.trim());
     body.append("nationality", nationalityValue);
@@ -151,7 +155,7 @@ function Blacklist() {
     {role === "user" && <section className="booking-panel blacklist-form-panel">
       <h2>{t("blacklistSubmitTitle")}</h2>
       <p>{t("blacklistSubmitDescription")}</p>
-      <form onSubmit={submit}>
+      <form onSubmit={submit} noValidate>
         <label htmlFor="blacklist-name">{t("blacklistName")}</label>
         <input id="blacklist-name" value={name} onChange={(event) => setName(event.target.value)} maxLength={100} required />
         <label htmlFor="blacklist-nationality">{t("nationality")}</label>
