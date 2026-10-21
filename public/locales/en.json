@@ -20,6 +20,7 @@
   "sendResetLink": "Send reset link",
   "passwordRecoveryInstructions": "Enter the email address on your CareNest account. If it matches an account, we’ll send a reset link that expires in 15 minutes.",
   "passwordRecoverySent": "If an account exists for that email, a password reset link has been sent.",
+  "checkInboxSpamNotice": "Please check your inbox (and Spam folder if you don't see it right away).",
   "passwordRecoveryError": "Could not start password recovery. Please try again.",
   "passwordRecoveryNotConfigured": "Password recovery email is not configured yet. Please contact support.",
   "passwordResetError": "This reset link is invalid or expired, or the password could not be changed.",

@@ -54,7 +54,12 @@ export default function PasswordRecovery({ reset = false }) {
           <input id="recovery-email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
         </>}
         {error && <p className="form-error" role="alert">{error}</p>}
-        {success && <p className="success-message" role="status">{success}</p>}
+        {success && (
+          <div className="success-message" role="status">
+            <p>{success}</p>
+            {!reset && <p className="check-spam-notice">{t("checkInboxSpamNotice")}</p>}
+          </div>
+        )}
         <button type="submit" disabled={submitting}>{submitting ? t("sendingRequest") : t(reset ? "resetPassword" : "sendResetLink")}</button>
       </form>
       <p><Link to="/login">{t("loginHere")}</Link></p>
