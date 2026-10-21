@@ -105,16 +105,16 @@
 
 .app-nav .nav-signup {
   border-radius: 8px;
-  background: #d954b2; /* Theme pink */
+  background: #683f80; /* Theme plum matching mobile app */
   color: #ffffff !important;
   padding: 0.45rem 1rem;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(217, 84, 178, 0.4);
+  box-shadow: 0 2px 8px rgba(104, 63, 128, 0.4);
   transition: background 0.2s, transform 0.1s;
 }
 
 .app-nav .nav-signup:hover {
-  background: #c743a1;
+  background: #58326e;
   color: #ffffff !important;
   text-decoration: none;
 }
@@ -162,8 +162,8 @@ nav {
 }
 
 button {
-  background-color: #d954b2;
-  color: white;
+  background-color: #683f80;
+  color: #ffffff !important;
   border: none;
   cursor: pointer;
   border-radius: 8px;
@@ -172,9 +172,12 @@ button {
 }
 
 button:hover {
-  background-color: #c743a1;
+  background-color: #58326e;
+  color: #ffffff !important;
 }
 button:disabled {
+  background-color: #d1c7d4 !important;
+  color: #8c8090 !important;
   cursor: wait;
   opacity: 0.7;
 }
@@ -346,8 +349,8 @@ textarea {
 .booking-approval-actions .booking-action-hint { flex-basis: auto; text-align: start; }
 html[dir="rtl"] .booking-approval-actions,
 html[dir="rtl"] .booking-approval-actions .booking-action-hint { direction: rtl; text-align: right; }
-.secondary-button { border: 1px solid #91517f; background: transparent; color: #733966; }
-.secondary-button:hover { background: #f5e6f1; color: #542848; }
+.secondary-button { border: 1.5px solid #683f80; background: transparent; color: #683f80; }
+.secondary-button:hover { background: #f5ebfa; color: #58326e; }
 
 .social-auth { margin-top: 1.25rem; }
 .social-auth-divider { display: flex; align-items: center; gap: .75rem; margin: 1rem 0; color: #5d4d60; }
@@ -429,8 +432,11 @@ html[dir="rtl"] .booking-approval-actions .booking-action-hint { direction: rtl;
 }
 
 .danger-button {
-  background: #a64054;
-  color: #fff;
+  background: #a32121;
+  color: #ffffff !important;
+}
+.danger-button:hover {
+  background: #8b1c1c;
 }
 input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
   outline: 3px solid #683f80;
@@ -685,14 +691,14 @@ form {
   color: #30243a;
 }
 
-.booking-panel *,
-.booking-card *,
-.sitter-card *,
-.sitter-filters *,
-.availability-control *,
-.policy-card *,
-.available-service-card *,
-form * {
+.booking-panel *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+.booking-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+.sitter-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+.sitter-filters *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+.availability-control *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+.policy-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+.available-service-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number),
+form *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number) {
   color: #30243a;
 }
 
@@ -769,15 +775,16 @@ textarea::placeholder {
 
 .app-nav .nav-signup,
 .social-auth-fallback {
-  background: #d954b2;
+  background: #683f80;
   border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff !important;
 }
 
 .app-nav a.nav-signup,
 .app-nav a.nav-signup:hover,
 .app-nav a.nav-signup:focus-visible {
-  color: #fff !important;
-  background: #c743a1;
+  color: #ffffff !important;
+  background: #58326e;
 }
 
 .service-tag {
@@ -840,14 +847,163 @@ textarea::placeholder {
 }
 
 .secondary-button {
-  border: 1px solid #91517f;
-  background: transparent;
-  color: #733966;
+  border: 1.5px solid #683f80 !important;
+  background: transparent !important;
+  color: #683f80 !important;
 }
 
 .secondary-button:hover {
-  color: #542848;
-  background: #f5e6f1;
+  color: #58326e !important;
+  background: #f5ebfa !important;
+}
+
+/* CareNest Mobile-matching button styles & white text on pink/button backgrounds */
+button,
+button *,
+input[type="submit"],
+input[type="button"],
+.primary-button,
+.primary-button *,
+.action-button,
+.action-button *,
+form button,
+form button *,
+form input[type="submit"],
+.booking-card button:not(.secondary-button),
+.booking-card button:not(.secondary-button) *,
+.booking-panel button:not(.secondary-button),
+.booking-panel button:not(.secondary-button) *,
+.sitter-card button:not(.secondary-button),
+.sitter-card button:not(.secondary-button) *,
+.sitter-filters button:not(.secondary-button),
+.sitter-filters button:not(.secondary-button) *,
+.blacklist-actions button:not(.secondary-button):not(.danger-button),
+.blacklist-actions button:not(.secondary-button):not(.danger-button) *,
+.confirmation-actions button:not(.secondary-button):not(.danger-button),
+.confirmation-actions button:not(.secondary-button):not(.danger-button) *,
+.review-profile-button,
+.review-profile-button *,
+.form-actions button:not(.secondary-button):not(.danger-button),
+.form-actions button:not(.secondary-button):not(.danger-button) *,
+.admin-document-links button,
+.social-auth-fallback,
+.social-auth-fallback *,
+.social-auth-retry,
+.social-auth-retry *,
+.app-nav .nav-signup,
+.app-nav .nav-signup *,
+.app-nav a.nav-signup,
+.app-nav a.nav-signup * {
+  background-color: #683f80;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+button:hover:not(:disabled):not(.secondary-button),
+button:hover:not(:disabled):not(.secondary-button) *,
+form button:hover:not(:disabled):not(.secondary-button),
+form button:hover:not(:disabled):not(.secondary-button) *,
+.booking-card button:not(.secondary-button):hover:not(:disabled),
+.booking-panel button:not(.secondary-button):hover:not(:disabled),
+.sitter-card button:not(.secondary-button):hover:not(:disabled),
+.sitter-filters button:not(.secondary-button):hover:not(:disabled),
+.blacklist-actions button:not(.secondary-button):not(.danger-button):hover:not(:disabled),
+.review-profile-button:hover:not(:disabled),
+.form-actions button:not(.secondary-button):not(.danger-button):hover:not(:disabled),
+.admin-document-links button:hover:not(:disabled),
+.social-auth-fallback:hover,
+.social-auth-retry:hover,
+.app-nav .nav-signup:hover,
+.app-nav a.nav-signup:hover {
+  background-color: #58326e !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* Secondary / outline buttons */
+.secondary-button,
+button.secondary-button,
+form button.secondary-button,
+.booking-card button.secondary-button,
+.booking-panel button.secondary-button,
+.blacklist-actions button.secondary-button,
+.confirmation-actions button.secondary-button {
+  background: transparent !important;
+  border: 1.5px solid #683f80 !important;
+  color: #683f80 !important;
+  fill: #683f80 !important;
+}
+
+.secondary-button:hover:not(:disabled),
+button.secondary-button:hover:not(:disabled),
+form button.secondary-button:hover:not(:disabled),
+.booking-card button.secondary-button:hover:not(:disabled),
+.booking-panel button.secondary-button:hover:not(:disabled),
+.blacklist-actions button.secondary-button:hover:not(:disabled),
+.confirmation-actions button.secondary-button:hover:not(:disabled) {
+  background: #f5ebfa !important;
+  color: #58326e !important;
+  fill: #58326e !important;
+}
+
+/* Danger buttons */
+.danger-button,
+button.danger-button,
+.confirmation-actions .danger-button,
+.blacklist-actions .danger-button {
+  background-color: #a32121 !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  border: none !important;
+}
+
+.danger-button:hover:not(:disabled),
+button.danger-button:hover:not(:disabled) {
+  background-color: #8b1c1c !important;
+  color: #ffffff !important;
+}
+
+/* Disabled buttons */
+button:disabled,
+button[disabled],
+form button:disabled,
+.secondary-button:disabled,
+.danger-button:disabled {
+  background-color: #d1c7d4 !important;
+  color: #8c8090 !important;
+  fill: #8c8090 !important;
+  border-color: #d1c7d4 !important;
+  cursor: not-allowed !important;
+  opacity: 0.8 !important;
+}
+
+/* Wherever there is any pink button or background, make the font on top of it white */
+.pink-button,
+.pink-bg,
+.bg-pink,
+[style*="pink"],
+[style*="#d954b2"],
+[style*="#c743a1"],
+[style*="#e779c9"],
+[style*="#c866b8"],
+button[style*="pink"],
+button[style*="#d954b2"],
+button[style*="#c743a1"] {
+  color: #ffffff !important;
+}
+
+.pink-button *,
+.pink-bg *,
+.bg-pink *,
+[style*="pink"] *,
+[style*="#d954b2"] *,
+[style*="#c743a1"] *,
+[style*="#e779c9"] *,
+[style*="#c866b8"] *,
+button[style*="pink"] *,
+button[style*="#d954b2"] *,
+button[style*="#c743a1"] * {
+  color: #ffffff !important;
 }
 
 .success-message a {
@@ -1348,8 +1504,11 @@ html[dir="rtl"] .marketplace .tag-list {
 }
 
 .confirmation-actions .danger-button {
-  background: #a64054;
-  color: #fff;
+  background: #a32121;
+  color: #ffffff !important;
+}
+.danger-button:hover {
+  background: #8b1c1c;
 }
 
 .confirmation-actions button:disabled {
