@@ -18,8 +18,12 @@ export const publicMetadata = {
     ar: ["تواصلوا مع كير نست | خدمات مقدمات الرعاية في مصر", "تواصلوا مع كير نست للمساعدة في العثور على مقدمة رعاية أو استخدام المنصة في مصر."],
   },
   "/policies": {
-    en: ["Community Policies | Care Nest", "Read Care Nest's safety, privacy, booking, and conduct policies for families and caregivers in Egypt."],
-    ar: ["سياسات المجتمع | كير نست", "اطلعوا على سياسات كير نست للسلامة والخصوصية والحجوزات والسلوك للعائلات ومقدمات الرعاية في مصر."],
+    en: ["Community Policies & Privacy Policy | Care Nest", "Read Care Nest's safety, privacy, booking, and conduct policies for families and caregivers in Egypt."],
+    ar: ["سياسات المجتمع وسياسة الخصوصية | كير نست", "اطلعوا على سياسات كير نست للسلامة والخصوصية والحجوزات والسلوك للعائلات ومقدمات الرعاية في مصر."],
+  },
+  "/privacy": {
+    en: ["Privacy Policy | Care Nest", "Read Care Nest's official privacy policy and data protection disclosures for web and mobile apps."],
+    ar: ["سياسة الخصوصية | كير نست", "اطلعوا على سياسة الخصوصية الرسمية وحماية البيانات لتطبيقات كير نست."],
   },
   "/available-babysitters": {
     en: ["Find a Caregiver in Egypt | Care Nest", "Browse approved caregiver profiles in Egypt and request care that fits your family's needs."],
