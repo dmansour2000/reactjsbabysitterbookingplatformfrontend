@@ -109,7 +109,7 @@ function Register() {
           <h2>{registrationText("chooseAccountType", "اختاري طريقة استخدامك لكير نست", "Choose how you want to use CareNest")}</h2>
           <p>{registrationText("googleAccountEmail", "حساب Google", "Google account")}: {googleRegistration.googleUser?.email}</p>
           <form onSubmit={finishGoogleRegistration}>
-            <label htmlFor="google-account-role">{registrationText("accountType", "أرغب في الانضمام إلى كير نست بصفة", "I want to join CareNest as a")}</label>
+            <label htmlFor="google-account-role" className="register-role-label">{registrationText("accountType", "أرغب في الانضمام إلى كير نست بصفة:", "I want to join CareNest as a:")}</label>
             <select id="google-account-role" value={googleRole} onChange={(event) => setGoogleRole(event.target.value)}>
               <option value="user">{t("user")}</option>
               <option value="babysitter">{t("babysitter")}</option>
