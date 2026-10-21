@@ -35,13 +35,13 @@
 
 .language-switcher button:hover {
   background: rgba(255, 255, 255, 0.75);
-  color: #1f242b;
+  color: #3d164d;
 }
 
 .language-switcher button.active {
-  background: #1f242b;
+  background: #3d164d;
   color: #fff;
-  border-color: #1f242b;
+  border-color: #3d164d;
   font-weight: 700;
 }
 
@@ -56,10 +56,10 @@
   margin: 0 auto;
   padding: 0.85rem 1.25rem;
   border-radius: 18px;
-  background: #1f242b; /* Dark grey */
+  background: #3d164d; /* Dark purple matching mobile app header */
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 18px rgba(29, 7, 39, 0.35);
 }
 
 .brand {
@@ -154,7 +154,7 @@ input, select, button, textarea {
   text-align: start;
   font-weight: 600;
   margin-bottom: 6px;
-  color: #ffffff;
+  color: #30243a;
 }
 nav {
   z-index: 10;
@@ -667,7 +667,7 @@ p,
   color: #79336d;
 }
 
-/* Panels, cards and forms with dark background beneath them */
+/* Panels, cards and forms with clean white background and dark text */
 .notice,
 .empty-state,
 .profile-card,
@@ -679,9 +679,10 @@ p,
 .policy-card,
 .available-service-card,
 form {
-  background: rgba(48, 35, 67, 0.94);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #f7f3fa;
+  background: #ffffff;
+  border: 1px solid rgba(78, 47, 80, 0.14);
+  box-shadow: 0 4px 18px rgba(48, 36, 58, 0.08);
+  color: #30243a;
 }
 
 .booking-panel *,
@@ -692,7 +693,7 @@ form {
 .policy-card *,
 .available-service-card *,
 form * {
-  color: #f7f3fa;
+  color: #30243a;
 }
 
 .booking-panel h1,
@@ -706,8 +707,21 @@ form * {
 .policy-card h2,
 .policy-card h3,
 .available-service-card h3,
-.profile-card h1 {
-  color: #ffffff;
+.profile-card h1,
+.contact-card h2,
+.service-panel h2 {
+  color: #30243a;
+}
+
+.booking-panel p,
+.booking-card p,
+.sitter-card p,
+.policy-card p,
+.available-service-card p,
+.service-panel p,
+.contact-card p,
+form p {
+  color: #3d2d48;
 }
 
 .booking-panel .muted,
@@ -716,32 +730,40 @@ form * {
 .profile-facts dt,
 .booking-facts dt,
 .availability-control small,
-.service-number,
-.sitter-reviews-count {
-  color: #d9cfe2;
+.sitter-reviews-count,
+.booking-action-hint {
+  color: #6c6270;
 }
 
-.booking-panel a.contact-email {
-  color: #f8a5c2;
+.service-number {
+  background: #3d164d;
+  color: #ffffff !important;
+  border: none;
+}
+
+.booking-panel a.contact-email,
+.contact-email {
+  color: #773a78 !important;
   font-weight: 700;
   text-decoration: underline;
 }
 
-.booking-panel a.contact-email:hover {
-  color: #ffffff;
+.booking-panel a.contact-email:hover,
+.contact-email:hover {
+  color: #c743a1 !important;
 }
 
 input,
 select,
 textarea {
-  color: #f7f3fa;
-  border-color: rgba(255, 255, 255, 0.3);
-  background-color: #493956;
+  color: #30243a;
+  border: 1px solid #d5ccd8;
+  background-color: #ffffff;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #d9cfe2;
+  color: #8e8394;
   opacity: 1;
 }
 
@@ -758,43 +780,91 @@ textarea::placeholder {
   background: #c743a1;
 }
 
-.service-tag,
-.sitter-avatar {
-  background: #65476d;
+.service-tag {
+  background: #f3e5f4;
+  color: #643b6b;
+  font-weight: 600;
 }
 
-.status-badge,
-.status-pending,
-.status-accepted,
+.sitter-avatar {
+  background: #f1d7ef;
+  color: #71356f;
+}
+
+.status-badge {
+  border-radius: 20px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 750;
+}
+
+.status-pending {
+  background: #fff9e6;
+  color: #855d00;
+  border: 1px solid #ffe8a3;
+}
+
+.status-accepted {
+  background: #dff3e6;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
 .status-declined,
-.status-cancelled,
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
 .success-message {
-  color: #f7f3fa;
-  background: #594568;
+  background: #e4f6e9;
+  color: #195f38;
+  border: 1px solid #bbf7d0;
 }
 
 .form-error {
-  color: #ffe2e2;
+  color: #dc2626;
 }
 
 .primary-link,
 .back-link,
 .secondary-button {
-  color: #f7f3fa;
+  color: #773a78;
+  font-weight: 700;
+}
+
+.primary-link:hover,
+.back-link:hover {
+  color: #c743a1;
+}
+
+.secondary-button {
+  border: 1px solid #91517f;
+  background: transparent;
+  color: #733966;
+}
+
+.secondary-button:hover {
+  color: #542848;
+  background: #f5e6f1;
 }
 
 .success-message a {
   color: #195f38;
 }
 
-.secondary-button:hover {
-  color: #fff;
-  background: #65476d;
+.social-auth-divider {
+  color: #5d4d60;
 }
 
 .social-auth-divider::before,
 .social-auth-divider::after {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(48, 36, 58, 0.2);
+}
+
+.social-auth-loading {
+  color: #5d4d60;
 }
 
 .information-page {
@@ -847,7 +917,7 @@ textarea::placeholder {
 
 .service-panel p,
 .contact-card p {
-  color: #e2d9ea;
+  color: #3d2d48;
   line-height: 1.7;
 }
 
@@ -860,7 +930,7 @@ textarea::placeholder {
 .contact-email {
   display: inline-block;
   margin-top: 1rem;
-  color: #fff;
+  color: #773a78;
   font-size: 1.1rem;
   font-weight: 750;
   overflow-wrap: anywhere;
@@ -888,11 +958,12 @@ textarea::placeholder {
 .own-profile-bio h3,
 .own-profile-documents h3 {
   margin-bottom: 0.5rem;
+  color: #30243a;
 }
 
 .own-profile-bio p,
 .own-profile-documents p {
-  color: #e2d9ea;
+  color: #3d2d48;
   line-height: 1.7;
 }
 
@@ -908,6 +979,7 @@ textarea::placeholder {
   margin-bottom: 1rem;
   text-align: center;
   font-size: clamp(1.35rem, 3vw, 1.8rem);
+  color: #30243a;
 }
 
 .available-service-grid {
@@ -918,17 +990,19 @@ textarea::placeholder {
 
 .available-service-card {
   padding: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(78, 47, 80, 0.14);
   border-radius: 14px;
-  background: rgba(48, 35, 67, 0.92);
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(48, 36, 58, 0.08);
 }
 
 .available-service-card h3 {
   margin-bottom: 0.5rem;
+  color: #30243a;
 }
 
 .available-service-card p {
-  color: #e2d9ea;
+  color: #3d2d48;
   line-height: 1.65;
 }
 
@@ -1015,9 +1089,10 @@ html[dir="rtl"] .marketplace .tag-list {
   width: min(100%, 1000px);
   max-height: 94vh;
   padding: 3.5rem 1rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(78, 47, 80, 0.18);
   border-radius: 16px;
-  background: #302343;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
 /* Responsive home hero: keep the decorative photos outside the text column. */
@@ -1175,9 +1250,11 @@ html[dir="rtl"] .marketplace .tag-list {
   max-height: 90vh;
   overflow-y: auto;
   padding: 3.5rem 1.5rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(78, 47, 80, 0.18);
   border-radius: 16px;
-  background: #302343;
+  background: #ffffff;
+  color: #30243a;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
   text-align: start;
 }
 
@@ -1202,7 +1279,7 @@ html[dir="rtl"] .marketplace .tag-list {
 .caregiver-review-bio p,
 .caregiver-review-uploads p {
   margin-top: 0.35rem;
-  color: #e2d9ea;
+  color: #3d2d48;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -1222,10 +1299,11 @@ html[dir="rtl"] .marketplace .tag-list {
   max-height: min(90vh, 900px);
   overflow-y: auto;
   padding: clamp(1rem, 4vw, 2rem);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(78, 47, 80, 0.18);
   border-radius: 16px;
-  background: #302343;
-  color: #f8f4fb;
+  background: #ffffff;
+  color: #30243a;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
   text-align: start;
 }
 
@@ -1303,8 +1381,10 @@ html[dir="rtl"] .marketplace .tag-list {
   max-height: 94vh;
   overflow-y: auto;
   padding: 3rem 1.5rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(78, 47, 80, 0.18);
   border-radius: 16px;
-  background: #302343;
+  background: #ffffff;
+  color: #30243a;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
   text-align: start;
 }
