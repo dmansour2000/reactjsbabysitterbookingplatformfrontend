@@ -1,8 +1,9 @@
 .bg-img {
-  background-image: radial-gradient(#f1a2d2, #a59ff5);
+  background: linear-gradient(135deg, #f1a2d2 0%, #a59ff5 100%);
   padding: 20px;
   text-align: center;
   min-height: 100vh;
+  color: #30243a;
 }
 
 .container {
@@ -23,11 +24,24 @@
   width: auto;
   margin: 0;
   padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.45);
+  color: #30243a;
+  border: 1px solid rgba(48, 36, 58, 0.15);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.language-switcher button:hover {
+  background: rgba(255, 255, 255, 0.75);
+  color: #1f242b;
 }
 
 .language-switcher button.active {
-  background: #683f80;
+  background: #1f242b;
   color: #fff;
+  border-color: #1f242b;
   font-weight: 700;
 }
 
@@ -42,8 +56,10 @@
   margin: 0 auto;
   padding: 0.85rem 1.25rem;
   border-radius: 18px;
-  background: #d954b2;
+  background: #1f242b; /* Dark grey */
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
 }
 
 .brand {
@@ -89,9 +105,18 @@
 
 .app-nav .nav-signup {
   border-radius: 8px;
-  background: white;
-  color: #79336d;
-  padding-inline: 0.8rem;
+  background: #d954b2; /* Theme pink */
+  color: #ffffff !important;
+  padding: 0.45rem 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(217, 84, 178, 0.4);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.app-nav .nav-signup:hover {
+  background: #c743a1;
+  color: #ffffff !important;
+  text-decoration: none;
 }
 
 .topnav {
@@ -137,14 +162,17 @@ nav {
 }
 
 button {
-  background-color: rgba(226,113,196,1);
+  background-color: #d954b2;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
 button:hover {
-  background-color: #555;
+  background-color: #c743a1;
 }
 button:disabled {
   cursor: wait;
@@ -581,35 +609,65 @@ body { text-align: center; }
   color: rgba(255,255,255,1);
 }
 
-/* Site-wide light typography with consistent page titles. */
+/* Site-wide theme matching CareNest mobile app */
 .bg-img {
-  background-image: radial-gradient(#71385f, #40396f);
+  background: linear-gradient(135deg, #f1a2d2 0%, #a59ff5 100%);
+  color: #30243a;
 }
 
-*,
-*::before,
-*::after {
-  color: #f7f3fa;
-}
-
+/* Headings and titles with no dark background */
 h1,
+h2,
+h3,
+h4,
 .page-heading h1,
-.profile-card h1 {
+.home-copy h1,
+#home-title,
+.available-services > h2 {
   margin: 0.25rem 0 0.5rem;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 750;
   line-height: 1.2;
+  color: #30243a;
 }
 
-.eyebrow,
-.muted,
-.profile-facts dt,
-.booking-facts dt,
-.availability-control small,
-.social-auth-divider {
-  color: #e2d9ea;
+/* Text & paragraphs with no dark background beneath them */
+p,
+.home-copy p,
+.page-heading p,
+.page-heading p:not(.eyebrow),
+.information-page .page-heading p:not(.eyebrow),
+.marketplace .page-heading p,
+.policy-page .page-heading p,
+.container > p,
+.parent > p,
+.home-page p {
+  color: #3d2d48;
 }
 
+.eyebrow {
+  color: #7a3b79;
+}
+
+.ad-label {
+  color: #5c4e65;
+}
+
+/* Links on the background */
+.container > a,
+.parent > a,
+.container > p a,
+.parent > p a {
+  color: #4a225d;
+  font-weight: 700;
+}
+
+.container > p a:hover,
+.parent > p a:hover {
+  color: #79336d;
+}
+
+/* Panels, cards and forms with dark background beneath them */
 .notice,
 .empty-state,
 .profile-card,
@@ -618,9 +676,59 @@ h1,
 .sitter-card,
 .sitter-filters,
 .availability-control,
+.policy-card,
+.available-service-card,
 form {
-  background: rgba(48, 35, 67, 0.92);
+  background: rgba(48, 35, 67, 0.94);
   border-color: rgba(255, 255, 255, 0.2);
+  color: #f7f3fa;
+}
+
+.booking-panel *,
+.booking-card *,
+.sitter-card *,
+.sitter-filters *,
+.availability-control *,
+.policy-card *,
+.available-service-card *,
+form * {
+  color: #f7f3fa;
+}
+
+.booking-panel h1,
+.booking-panel h2,
+.booking-panel h3,
+.booking-card h1,
+.booking-card h2,
+.booking-card h3,
+.sitter-card h2,
+.sitter-card h3,
+.policy-card h2,
+.policy-card h3,
+.available-service-card h3,
+.profile-card h1 {
+  color: #ffffff;
+}
+
+.booking-panel .muted,
+.booking-card .muted,
+.sitter-card .muted,
+.profile-facts dt,
+.booking-facts dt,
+.availability-control small,
+.service-number,
+.sitter-reviews-count {
+  color: #d9cfe2;
+}
+
+.booking-panel a.contact-email {
+  color: #f8a5c2;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.booking-panel a.contact-email:hover {
+  color: #ffffff;
 }
 
 input,
@@ -639,14 +747,15 @@ textarea::placeholder {
 
 .app-nav .nav-signup,
 .social-auth-fallback {
-  background: #493956;
+  background: #d954b2;
   border-color: rgba(255, 255, 255, 0.5);
 }
 
 .app-nav a.nav-signup,
 .app-nav a.nav-signup:hover,
 .app-nav a.nav-signup:focus-visible {
-  color: #fff;
+  color: #fff !important;
+  background: #c743a1;
 }
 
 .service-tag,
@@ -670,9 +779,12 @@ textarea::placeholder {
 
 .primary-link,
 .back-link,
-.secondary-button,
-.success-message a {
+.secondary-button {
   color: #f7f3fa;
+}
+
+.success-message a {
+  color: #195f38;
 }
 
 .secondary-button:hover {
@@ -697,7 +809,7 @@ textarea::placeholder {
 
 .information-page .page-heading p:not(.eyebrow) {
   margin-top: 0.75rem;
-  color: #e2d9ea;
+  color: #3d2d48;
   line-height: 1.75;
 }
 
@@ -970,12 +1082,13 @@ html[dir="rtl"] .marketplace .tag-list {
   font-size: clamp(2rem, 3.3vw, 3.2rem);
   line-height: 1.15;
   text-wrap: balance;
+  color: #30243a;
 }
 
 .home-copy p {
   max-width: 35rem;
   margin-inline: auto;
-  color: #f0e8f4;
+  color: #3d2d48;
   font-size: clamp(1rem, 1.45vw, 1.3rem);
   line-height: 1.6;
 }
@@ -1034,10 +1147,12 @@ html[dir="rtl"] .marketplace .tag-list {
 
   .home-copy h1 {
     font-size: clamp(1.8rem, 8vw, 2.4rem);
+    color: #30243a;
   }
 
   .home-copy p {
     font-size: 1rem;
+    color: #3d2d48;
   }
 }
 
