@@ -36,8 +36,12 @@ export default function AccountSecurity() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
         body: JSON.stringify({ email: newEmail, currentPassword: emailPassword }),
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.msg === "Current password is incorrect" ? "emailPasswordIncorrect" : data.msg === "Email address is already in use" ? "emailAlreadyUsed" : "emailChangeError");
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        if (data.msg === "Current password is incorrect") throw new Error("emailPasswordIncorrect");
+        if (data.msg === "Email address is already in use") throw new Error("emailAlreadyUsed");
+        throw new Error("emailChangeError");
+      }
       setEmail(data.email); setNewEmail(""); setEmailPassword(""); setEmailSuccess(t("emailChanged"));
     } catch (err) { setEmailError(t(err.message || "emailChangeError")); }
     finally { setSaving(false); }
@@ -55,12 +59,16 @@ export default function AccountSecurity() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
         body: JSON.stringify({ currentPassword, newPassword }),
       });
-      if (!response.ok) throw new Error("passwordChangeError");
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        if (data.msg === "Current password is incorrect") throw new Error("emailPasswordIncorrect");
+        throw new Error("passwordChangeError");
+      }
       setCurrentPassword("");
       setNewPassword("");
       setSuccess(t("passwordChanged"));
-    } catch (_) {
-      setError(t("passwordChangeError"));
+    } catch (err) {
+      setError(t(err.message || "passwordChangeError"));
     } finally {
       setSaving(false);
     }
@@ -77,7 +85,7 @@ export default function AccountSecurity() {
         <input id="new-email" type="email" autoComplete="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} required />
         <label htmlFor="email-current-password">{t("currentPassword")}</label>
         <input id="email-current-password" type="password" autoComplete="current-password" value={emailPassword} onChange={(event) => setEmailPassword(event.target.value)} required />
-        {emailError && <p className="form-error" role="alert">{t(emailError)}</p>}
+        {emailError && <p className="form-error" role="alert">{emailError}</p>}
         {emailSuccess && <p className="success-message" role="status">{emailSuccess}</p>}
         <button type="submit" disabled={saving}>{saving ? t("saving") : t("saveEmail")}</button>
       </form>
