@@ -11,6 +11,7 @@ i18n
   .init({
     backend: {
       loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}.json`,
+      queryStringParams: { v: '20261021-3' },
     },
     lng: initialLanguage,
     fallbackLng: 'ar',

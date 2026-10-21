@@ -5,7 +5,11 @@ import { apiUrl } from "./api";
 import "./i18n";
 
 export default function PasswordRecovery({ reset = false }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const languageCode = (i18n.resolvedLanguage || i18n.language || "ar").split("-")[0];
+  const recoveryText = (key, arabic, english) => t(key, {
+    defaultValue: languageCode === "ar" ? arabic : english,
+  });
   const [params] = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,7 +61,15 @@ export default function PasswordRecovery({ reset = false }) {
         {success && (
           <div className="success-message" role="status">
             <p>{success}</p>
-            {!reset && <p className="check-spam-notice">{t("checkInboxSpamNotice")}</p>}
+            {!reset && (
+              <p className="check-spam-notice">
+                {recoveryText(
+                  "checkInboxSpamNotice",
+                  "يرجى التحقق من صندوق الوارد (ومجلد الرسائل غير المرغوب فيها Spam إذا لم تجدها على الفور).",
+                  "Please check your inbox (and Spam folder if you don't see it right away)."
+                )}
+              </p>
+            )}
           </div>
         )}
         <button type="submit" disabled={submitting}>{submitting ? t("sendingRequest") : t(reset ? "resetPassword" : "sendResetLink")}</button>
