@@ -1,4 +1,4 @@
-export const SITE_URL = "https://dmansour2000.github.io/reactjsbabysitterbookingplatformfrontend";
+export const SITE_URL = "https://dmansour2000.github.io";
 
 export const publicMetadata = {
   "/": {

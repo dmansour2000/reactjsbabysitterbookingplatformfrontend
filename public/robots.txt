@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://dmansour2000.github.io/reactjsbabysitterbookingplatformfrontend/sitemap.xml
+Sitemap: https://dmansour2000.github.io/sitemap.xml
