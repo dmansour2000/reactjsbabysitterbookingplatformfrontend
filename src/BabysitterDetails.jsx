@@ -156,16 +156,19 @@ function BabysitterDetails() {
       <section className="profile-card">
         <Link className="back-link" to="/available-babysitters">← {t("backToSitters")}</Link>
         <div className="profile-intro">
-          {photoSource
-            ? <button className="photo-open-button" type="button" onClick={() => setPhotoOpen(true)} aria-label={t("viewLargerPhoto", { name: babysitter.name })}>
-              <img className="sitter-avatar large" src={photoSource} alt={babysitter.name} />
-            </button>
-            : <div className="sitter-avatar large" aria-hidden="true">{babysitter.name.slice(0, 1).toLocaleUpperCase()}</div>}
+          <button className="photo-open-button" type="button" onClick={() => setPhotoOpen(true)} aria-label={t("viewLargerPhoto", { name: babysitter.name })}>
+            <img
+              className="sitter-avatar large"
+              src={photoSource || "/carenest-icon.svg"}
+              alt={babysitter.name}
+              onError={(e) => { e.currentTarget.src = "/carenest-icon.svg"; }}
+            />
+          </button>
           <div>
             <p className="eyebrow">{t("babysitterProfile")}</p>
             <h1>{babysitter.name}</h1>
-            <p className={babysitter.available ? "availability available" : "availability unavailable"}>
-              {babysitter.available ? t("availableForRequests") : t("notTakingRequests")}
+            <p className={!(babysitter.hasAcceptedBooking || babysitter.isBookedAndAccepted) ? "availability available" : "availability unavailable"}>
+              {!(babysitter.hasAcceptedBooking || babysitter.isBookedAndAccepted) ? t("availableForRequests") : t("notTakingRequests")}
             </p>
             {babysitter.moderationStatus === "approved" && <p className="verification-badge">✓ {t("identityDocumentsReviewed")}</p>}
           </div>
@@ -187,7 +190,7 @@ function BabysitterDetails() {
         </section>
       </div>}
 
-      {role === "user" && babysitter.available && (
+      {role === "user" && !(babysitter.hasAcceptedBooking || babysitter.isBookedAndAccepted) && (
         <section className="booking-panel">
           <p className="eyebrow">{t("requestCare")}</p>
           <h2>{t("bookThisBabysitter")}</h2>
@@ -218,7 +221,7 @@ function BabysitterDetails() {
           </form>
         </section>
       )}
-      {role === "user" && !babysitter.available && <p className="notice">{t("notTakingRequests")}</p>}
+      {role === "user" && (babysitter.hasAcceptedBooking || babysitter.isBookedAndAccepted) && <p className="notice">{t("notTakingRequests")}</p>}
       {role === "babysitter" && <p className="notice">{t("sitterCannotBook")}</p>}
       {role === "admin" && <p className="notice">{t("parentAccountRequired")}</p>}
       {!role && <p className="notice"><Link to="/login">{t("signInToRequest")}</Link> {t("bookingRequestHelp")}</p>}

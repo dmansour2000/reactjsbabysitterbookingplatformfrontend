@@ -130,29 +130,43 @@ function AvailableBabysitters() {
       )}
 
       <div className="sitter-grid">
-        {visibleSitters.map((sitter) => (
-          <article className="sitter-card" key={sitter._id}>
-            {sitter.photoUrl ? <img className="sitter-avatar" src={apiUrl(sitter.photoUrl)} alt={sitter.name} /> : <div className="sitter-avatar" aria-hidden="true">{(sitter.name || "?").slice(0, 1).toLocaleUpperCase()}</div>}
-            <div className="sitter-card-content">
-              <h2>{sitter.name}</h2>
-              <p className="muted" dir="auto">{localizeNationality(sitter.nationality, i18n.language, t)}</p>
-              {sitter.city && <p dir="auto">{localizeCity(sitter.city)}</p>}
-              {sitter.age && <p dir="auto"><span>{t("age")}: </span><bdi>{sitter.age}</bdi></p>}
-              {sitter.monthlySalary != null && <p className="rate-label" dir="auto"><bdi>{sitter.monthlySalary.toLocaleString()} {sitter.currency || "EGP"}</bdi> {t("perMonth")}</p>}
-              <div className="tag-list">
-                {(sitter.services || []).filter((item) => item !== "studying").map((item) => (
-                  <span className="service-tag" key={item}>{t(item)}</span>
-                ))}
-                {!(sitter.services || []).some((item) => item !== "studying") && (
-                  <span className="muted">{t("servicesNotListed")}</span>
-                )}
+        {visibleSitters.map((sitter) => {
+          const isBusy = !!(sitter.hasAcceptedBooking || sitter.isBookedAndAccepted);
+          const avatarUrl = sitter.photoUrl ? apiUrl(sitter.photoUrl) : "/carenest-icon.svg";
+          return (
+            <article className="sitter-card" key={sitter._id}>
+              <img
+                className="sitter-avatar"
+                src={avatarUrl}
+                alt={sitter.name}
+                onError={(e) => { e.currentTarget.src = "/carenest-icon.svg"; }}
+              />
+              <div className="sitter-card-content">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h2>{sitter.name}</h2>
+                  <span className={!isBusy ? "availability available" : "availability unavailable"} style={{ fontSize: "0.8rem", padding: "2px 8px", borderRadius: "12px" }}>
+                    {!isBusy ? t("availableForRequests") : t("notTakingRequests")}
+                  </span>
+                </div>
+                <p className="muted" dir="auto">{localizeNationality(sitter.nationality, i18n.language, t)}</p>
+                {sitter.city && <p dir="auto">{localizeCity(sitter.city)}</p>}
+                {sitter.age && <p dir="auto"><span>{t("age")}: </span><bdi>{sitter.age}</bdi></p>}
+                {sitter.monthlySalary != null && <p className="rate-label" dir="auto"><bdi>{sitter.monthlySalary.toLocaleString()} {sitter.currency || "EGP"}</bdi> {t("perMonth")}</p>}
+                <div className="tag-list">
+                  {(sitter.services || []).filter((item) => item !== "studying").map((item) => (
+                    <span className="service-tag" key={item}>{t(item)}</span>
+                  ))}
+                  {!(sitter.services || []).some((item) => item !== "studying") && (
+                    <span className="muted">{t("servicesNotListed")}</span>
+                  )}
+                </div>
+                <Link className="primary-link" to={`/view-user/${sitter.userId || sitter._id}`}>
+                  {t("viewProfileAndBook")}
+                </Link>
               </div>
-              <Link className="primary-link" to={`/view-user/${sitter.userId}`}>
-                {t("viewProfileAndBook")}
-              </Link>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
       <AdUnit />
     </main>
