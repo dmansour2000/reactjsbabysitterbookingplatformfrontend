@@ -664,13 +664,13 @@ p,
 .parent > a,
 .container > p a,
 .parent > p a {
-  color: #4a225d;
+  color: #683f80;
   font-weight: 700;
 }
 
 .container > p a:hover,
 .parent > p a:hover {
-  color: #79336d;
+  color: #4a225d;
 }
 
 /* Panels, cards and forms with clean white background and dark text */
@@ -748,15 +748,17 @@ form p {
 }
 
 .booking-panel a.contact-email,
-.contact-email {
-  color: #773a78 !important;
+.contact-email,
+a.contact-email {
+  color: #683f80 !important;
   font-weight: 700;
   text-decoration: underline;
 }
 
 .booking-panel a.contact-email:hover,
-.contact-email:hover {
-  color: #c743a1 !important;
+.contact-email:hover,
+a.contact-email:hover {
+  color: #4a225d !important;
 }
 
 input,
@@ -835,15 +837,14 @@ textarea::placeholder {
 }
 
 .primary-link,
-.back-link,
-.secondary-button {
-  color: #773a78;
+.back-link {
+  color: #683f80;
   font-weight: 700;
 }
 
 .primary-link:hover,
 .back-link:hover {
-  color: #c743a1;
+  color: #4a225d;
 }
 
 .secondary-button {
@@ -1006,6 +1007,29 @@ button[style*="#c743a1"] * {
   color: #ffffff !important;
 }
 
+/* All standard content links matching mobile app purple */
+main a:not(.nav-signup):not(.button):not(button):not(.danger-button),
+.policy-page a,
+.information-page a,
+.marketplace a:not(.button):not(button),
+.booking-panel a:not(.button):not(button):not(.contact-email),
+.booking-card a:not(.button):not(button),
+.contact-card a,
+.notice a {
+  color: #683f80;
+}
+
+main a:not(.nav-signup):not(.button):not(button):not(.danger-button):hover,
+.policy-page a:hover,
+.information-page a:hover,
+.marketplace a:not(.button):not(button):hover,
+.booking-panel a:not(.button):not(button):not(.contact-email):hover,
+.booking-card a:not(.button):not(button):hover,
+.contact-card a:hover,
+.notice a:hover {
+  color: #4a225d;
+}
+
 .success-message a {
   color: #195f38;
 }
@@ -1086,11 +1110,16 @@ button[style*="#c743a1"] * {
 .contact-email {
   display: inline-block;
   margin-top: 1rem;
-  color: #773a78;
+  color: #683f80 !important;
   font-size: 1.1rem;
   font-weight: 750;
+  text-decoration: underline;
   overflow-wrap: anywhere;
   direction: ltr;
+}
+
+.contact-email:hover {
+  color: #4a225d !important;
 }
 
 .own-profile-card {
