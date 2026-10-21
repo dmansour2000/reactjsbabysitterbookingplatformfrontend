@@ -7,7 +7,7 @@ CareNest is a React application built with Vite. The frontend and backend are ma
 
 ## Live website and API
 
-- Frontend (GitHub Pages): [dmansour2000.github.io/reactjsbabysitterbookingplatformfrontend](https://dmansour2000.github.io/reactjsbabysitterbookingplatformfrontend)
+- Frontend (GitHub Pages): [dmansour2000.github.io](https://dmansour2000.github.io/)
 - Backend API (Render): [nodejsbabysitterbookingplatformbackend.onrender.com](https://nodejsbabysitterbookingplatformbackend.onrender.com)
 
 The production frontend uses the Render API by default. You can override the API base URL at build time with `VITE_API_BASE_URL`.
