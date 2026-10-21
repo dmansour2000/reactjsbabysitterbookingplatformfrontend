@@ -107,18 +107,23 @@
   text-decoration: underline;
 }
 
-.app-nav .nav-signup {
+.app-nav .nav-signup,
+.app-nav a.nav-signup {
   border-radius: 8px;
-  background: #683f80; /* Theme plum matching mobile app */
+  background: #8b5cf6 !important; /* Light purple */
+  background-color: #8b5cf6 !important;
   color: #ffffff !important;
   padding: 0.45rem 1rem;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(104, 63, 128, 0.4);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
   transition: background 0.2s, transform 0.1s;
 }
 
-.app-nav .nav-signup:hover {
-  background: #58326e;
+.app-nav .nav-signup:hover,
+.app-nav a.nav-signup:hover,
+.app-nav a.nav-signup:focus-visible {
+  background: #7c3aed !important;
+  background-color: #7c3aed !important;
   color: #ffffff !important;
   text-decoration: none;
 }
@@ -786,18 +791,10 @@ textarea::placeholder {
   opacity: 1;
 }
 
-.app-nav .nav-signup,
 .social-auth-fallback {
   background: #683f80;
   border-color: rgba(255, 255, 255, 0.5);
   color: #ffffff !important;
-}
-
-.app-nav a.nav-signup,
-.app-nav a.nav-signup:hover,
-.app-nav a.nav-signup:focus-visible {
-  color: #ffffff !important;
-  background: #58326e;
 }
 
 .service-tag {
@@ -901,11 +898,7 @@ form input[type="submit"],
 .social-auth-fallback,
 .social-auth-fallback *,
 .social-auth-retry,
-.social-auth-retry *,
-.app-nav .nav-signup,
-.app-nav .nav-signup *,
-.app-nav a.nav-signup,
-.app-nav a.nav-signup * {
+.social-auth-retry * {
   background-color: #683f80;
   color: #ffffff !important;
   fill: #ffffff !important;
@@ -924,9 +917,7 @@ form button:hover:not(:disabled):not(.secondary-button) *,
 .form-actions button:not(.secondary-button):not(.danger-button):hover:not(:disabled),
 .admin-document-links button:hover:not(:disabled),
 .social-auth-fallback:hover,
-.social-auth-retry:hover,
-.app-nav .nav-signup:hover,
-.app-nav a.nav-signup:hover {
+.social-auth-retry:hover {
   background-color: #58326e !important;
   color: #ffffff !important;
   fill: #ffffff !important;
