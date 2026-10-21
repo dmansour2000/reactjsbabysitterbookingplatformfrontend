@@ -90,7 +90,7 @@ The frontend repository is published on GitHub Pages at the site linked above. T
 
 ## Search visibility
 
-The public pages have localized titles and descriptions, canonical URLs, social sharing metadata, and Care Nest organization/site structured data. The production build creates static page shells for GitHub Pages routes so they work on direct visits and crawlers can read each page's metadata. `public/robots.txt` points crawlers to `public/sitemap.xml`. After deployment, verify the site in Google Search Console and submit the sitemap at `https://dmansour2000.github.io/reactjsbabysitterbookingplatformfrontend/sitemap.xml`. Search engines decide when and whether to index submitted URLs.
+The public pages have localized titles and descriptions, canonical URLs, social sharing metadata, and Care Nest organization/site structured data. The production build creates static page shells for GitHub Pages routes so they work on direct visits and crawlers can read each page's metadata. `public/robots.txt` points crawlers to `public/sitemap.xml`. After deployment, verify the site in Google Search Console and submit the sitemap at `https://dmansour2000.github.io/sitemap.xml`. Search engines decide when and whether to index submitted URLs.
 
 Useful scripts:
 
