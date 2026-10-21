@@ -10,7 +10,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const { t, i18n } = useTranslation();
@@ -34,6 +34,10 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!role) {
+      setError(registrationText("selectAccountType", "يرجى اختيار نوع الحساب", "Please select an account type"));
+      return;
+    }
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError("");
@@ -170,7 +174,20 @@ function Register() {
             placeholder={t("name")}
             required
           />
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <label htmlFor="role" className="register-role-label">
+            {registrationText("joinCareNestAs", "أرغب في الانضمام إلى كير نست بصفة:", "I want to join CareNest as a:")}
+          </label>
+          <select
+            id="role"
+            name="role"
+            aria-label={registrationText("joinCareNestAs", "أرغب في الانضمام إلى كير نست بصفة:", "I want to join CareNest as a:")}
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+          >
+            <option value="" disabled>
+              {registrationText("accountTypePlaceholder", "نوع الحساب", "Account Type")}
+            </option>
             <option value="user" data-i18n="user">
               {t("user")}
             </option>
@@ -184,11 +201,11 @@ function Register() {
           </button>
         </form>
         <SocialAuth
-          role={role}
+          role={role || "user"}
           flow="register"
           onAuthenticated={completeRegistration}
           onRegistrationRequired={(pendingRegistration) => {
-            setGoogleRole(role);
+            setGoogleRole(role || "user");
             setGoogleRegistration(pendingRegistration);
           }}
         />

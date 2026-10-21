@@ -124,6 +124,13 @@ input, select, button, textarea {
   padding: 10px 12px;
   border-radius: 6px;
 }
+.register-role-label {
+  display: block;
+  text-align: start;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #55274d;
+}
 nav {
   z-index: 10;
   position: relative;

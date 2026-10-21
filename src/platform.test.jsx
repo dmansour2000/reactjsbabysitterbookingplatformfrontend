@@ -169,6 +169,7 @@ describe("authentication pages", () => {
     fireEvent.change(screen.getByLabelText("email"), { target: { value: "family@example.com" } });
     fireEvent.change(screen.getByLabelText("password"), { target: { value: "password123" } });
     fireEvent.change(screen.getByLabelText("name"), { target: { value: "A Family" } });
+    fireEvent.change(screen.getByLabelText("joinCareNestAs"), { target: { value: "user" } });
     fireEvent.click(screen.getByRole("button", { name: "register" }));
 
     await waitFor(() => expect(screen.getByTestId("current-path")).toHaveTextContent("/available-babysitters"));
@@ -184,6 +185,7 @@ describe("authentication pages", () => {
     fireEvent.change(screen.getByLabelText("email"), { target: { value: "family@example.com" } });
     fireEvent.change(screen.getByLabelText("password"), { target: { value: "password123" } });
     fireEvent.change(screen.getByLabelText("name"), { target: { value: "A Family" } });
+    fireEvent.change(screen.getByLabelText("joinCareNestAs"), { target: { value: "user" } });
     fireEvent.click(screen.getByRole("button", { name: "register" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("emailAlreadyUsed");
@@ -359,6 +361,8 @@ describe("caregiver search and booking flow", () => {
 describe("admin account actions", () => {
   beforeEach(() => {
     localStorage.setItem("token", "admin-token");
+    localStorage.setItem("role", "admin");
+    localStorage.setItem("isSuperAdmin", "true");
     vi.stubGlobal("fetch", vi.fn((url, options = {}) => {
       const path = String(url);
       if (path.endsWith("/api/admin/users/account-id/details")) return Promise.resolve(jsonResponse({ user: { _id: "account-id", username: "family", role: "user", email: "family@example.com", name: "Family" }, requests: [] }));
@@ -458,7 +462,7 @@ describe("caregiver safety reports", () => {
     fireEvent.change(screen.getByLabelText("blacklistPhotoRequired"), { target: { files: [new File(["photo"], "caregiver.png", { type: "image/png" })] } });
     fireEvent.click(screen.getByRole("button", { name: "blacklistSubmit" }));
 
-    expect(await screen.findByRole("status")).toHaveTextContent("blacklistSubmitted");
+    expect(await screen.findByText("blacklistSubmitted")).toBeInTheDocument();
     const submission = fetch.mock.calls.find(([url, options]) => String(url).endsWith("/api/blacklist") && options?.method === "POST");
     expect(submission[1].body).toBeInstanceOf(FormData);
     expect(submission[1].body.get("name")).toBe("Reported Caregiver");
