@@ -24,24 +24,24 @@
   width: auto;
   margin: 0;
   padding: 0.4rem 0.8rem;
-  background: rgba(255, 255, 255, 0.45);
-  color: #374151;
-  border: 1px solid rgba(48, 36, 58, 0.15);
+  background: rgba(255, 255, 255, 0.6);
+  color: #683f80 !important;
+  border: 1px solid rgba(74, 34, 93, 0.2);
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .language-switcher button:hover {
-  background: rgba(255, 255, 255, 0.75);
-  color: #3d164d;
+  background: rgba(255, 255, 255, 0.9);
+  color: #4a225d !important;
 }
 
 .language-switcher button.active {
-  background: #3d164d;
-  color: #fff;
-  border-color: #3d164d;
+  background: #3d164d !important;
+  color: #ffffff !important;
+  border-color: #3d164d !important;
   font-weight: 700;
 }
 
@@ -867,8 +867,8 @@ textarea::placeholder {
 }
 
 /* CareNest Mobile-matching button styles & white text on pink/button backgrounds */
-button,
-button *,
+button:not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button),
+button:not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button) *,
 input[type="submit"],
 input[type="button"],
 .primary-button,
@@ -904,8 +904,8 @@ form input[type="submit"],
   fill: #ffffff !important;
 }
 
-button:hover:not(:disabled):not(.secondary-button),
-button:hover:not(:disabled):not(.secondary-button) *,
+button:hover:not(:disabled):not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button),
+button:hover:not(:disabled):not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button) *,
 form button:hover:not(:disabled):not(.secondary-button),
 form button:hover:not(:disabled):not(.secondary-button) *,
 .booking-card button:not(.secondary-button):hover:not(:disabled),
@@ -921,6 +921,46 @@ form button:hover:not(:disabled):not(.secondary-button) *,
   background-color: #58326e !important;
   color: #ffffff !important;
   fill: #ffffff !important;
+}
+
+/* Light grey and translucent neutral buttons: purple font */
+.language-switcher button:not(.active),
+.language-switcher button:not(.active) *,
+.photo-modal-close,
+.photo-modal-close *,
+.account-details-header button,
+.account-details-header button *,
+.btn-light-grey,
+button.btn-light-grey,
+.btn-grey,
+button.btn-grey,
+button[style*="#eee"],
+button[style*="#ddd"],
+button[style*="#f0f0f0"],
+button[style*="#f3f4f6"],
+button[style*="#e5e7eb"],
+button[style*="#f8f9fa"],
+button[style*="#f1f5f9"],
+button[style*="#e2e8f0"],
+button[style*="rgba(255, 255, 255"],
+button[style*="rgba(255,255,255"] {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  color: #683f80 !important;
+  fill: #683f80 !important;
+  border: 1px solid rgba(74, 34, 93, 0.2) !important;
+}
+
+.language-switcher button:not(.active):hover,
+.photo-modal-close:hover,
+.account-details-header button:hover,
+button[style*="#eee"]:hover,
+button[style*="#ddd"]:hover,
+button[style*="#f0f0f0"]:hover,
+button[style*="#f3f4f6"]:hover,
+button[style*="rgba(255, 255, 255"]:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #4a225d !important;
+  fill: #4a225d !important;
 }
 
 /* Secondary / outline buttons with very light pink background and purple font */
