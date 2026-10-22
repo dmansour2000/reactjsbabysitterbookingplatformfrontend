@@ -186,9 +186,9 @@ button:hover {
 }
 button:disabled {
   background-color: #d1c7d4 !important;
-  color: #8c8090 !important;
-  cursor: wait;
-  opacity: 0.7;
+  color: #683f80 !important;
+  cursor: not-allowed;
+  opacity: 0.9;
 }
 .form-error {
   color: #a32121;
@@ -931,20 +931,43 @@ form button:hover:not(:disabled):not(.secondary-button) *,
 .account-details-header button,
 .account-details-header button *,
 .btn-light-grey,
+.btn-light-grey *,
 button.btn-light-grey,
+button.btn-light-grey *,
 .btn-grey,
+.btn-grey *,
 button.btn-grey,
+button.btn-grey *,
 button[style*="#eee"],
+button[style*="#eee"] *,
 button[style*="#ddd"],
+button[style*="#ddd"] *,
 button[style*="#f0f0f0"],
+button[style*="#f0f0f0"] *,
 button[style*="#f3f4f6"],
+button[style*="#f3f4f6"] *,
 button[style*="#e5e7eb"],
+button[style*="#e5e7eb"] *,
 button[style*="#f8f9fa"],
+button[style*="#f8f9fa"] *,
 button[style*="#f1f5f9"],
+button[style*="#f1f5f9"] *,
 button[style*="#e2e8f0"],
+button[style*="#e2e8f0"] *,
+button[style*="#d1c7d4"],
+button[style*="#d1c7d4"] *,
+button[style*="#d8cedc"],
+button[style*="#d8cedc"] *,
+button[style*="#e2d9ea"],
+button[style*="#e2d9ea"] *,
+button[style*="gray"],
+button[style*="gray"] *,
+button[style*="grey"],
+button[style*="grey"] *,
 button[style*="rgba(255, 255, 255"],
-button[style*="rgba(255,255,255"] {
-  background-color: rgba(255, 255, 255, 0.6) !important;
+button[style*="rgba(255, 255, 255"] *,
+button[style*="rgba(255,255,255"],
+button[style*="rgba(255,255,255"] * {
   color: #683f80 !important;
   fill: #683f80 !important;
   border: 1px solid rgba(74, 34, 93, 0.2) !important;
@@ -1006,18 +1029,46 @@ button.danger-button:hover:not(:disabled) {
   color: #ffffff !important;
 }
 
-/* Disabled buttons */
+/* Disabled / light grey buttons across the site, admin panel & safety reports: purple font */
 button:disabled,
+button:disabled *,
 button[disabled],
+button[disabled] *,
 form button:disabled,
+form button:disabled *,
 .secondary-button:disabled,
-.danger-button:disabled {
+.secondary-button:disabled *,
+.danger-button:disabled,
+.danger-button:disabled *,
+.admin-document-links button:disabled,
+.admin-document-links button:disabled *,
+.admin-document-links button[disabled],
+.admin-document-links button[disabled] *,
+.admin-panel button:disabled,
+.admin-panel button:disabled *,
+.caregiver-profile-modal button:disabled,
+.caregiver-profile-modal button:disabled *,
+.caregiver-review-uploads button:disabled,
+.caregiver-review-uploads button:disabled *,
+.blacklist-card button:disabled,
+.blacklist-card button:disabled *,
+.blacklist-actions button:disabled,
+.blacklist-actions button:disabled *,
+.blacklist-actions button[disabled],
+.blacklist-actions button[disabled] *,
+.blacklist-review-panel button:disabled,
+.blacklist-review-panel button:disabled *,
+.blacklist-form-panel button:disabled,
+.blacklist-form-panel button:disabled *,
+.confirmation-actions button:disabled,
+.confirmation-actions button:disabled * {
   background-color: #d1c7d4 !important;
-  color: #8c8090 !important;
-  fill: #8c8090 !important;
+  color: #683f80 !important;
+  fill: #683f80 !important;
   border-color: #d1c7d4 !important;
   cursor: not-allowed !important;
-  opacity: 0.8 !important;
+  opacity: 0.9 !important;
+  font-weight: 600 !important;
 }
 
 /* Buttons with a very light pink background: font color is purple */
