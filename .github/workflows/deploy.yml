@@ -30,7 +30,7 @@ jobs:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || secrets.VITE_API_BASE_URL || 'https://nodejsbabysitterbookingplatformbackend.onrender.com' }}
           VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID || secrets.VITE_GOOGLE_CLIENT_ID || '146671912539-sctdecp31oeebjq3868adrj9eqbsjl33.apps.googleusercontent.com' }}
           VITE_ADSENSE_CLIENT: ${{ vars.VITE_ADSENSE_CLIENT || secrets.VITE_ADSENSE_CLIENT || 'ca-pub-3496568058228119' }}
-          VITE_ADSENSE_SLOT: ${{ vars.VITE_ADSENSE_SLOT || secrets.VITE_ADSENSE_SLOT || '0000000000' }}
+          VITE_ADSENSE_SLOT: ${{ vars.VITE_ADSENSE_SLOT || secrets.VITE_ADSENSE_SLOT || '8692700542' }}
         run: npm run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

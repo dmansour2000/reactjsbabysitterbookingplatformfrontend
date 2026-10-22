@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 const clientId = import.meta.env.VITE_ADSENSE_CLIENT?.trim() || "ca-pub-3496568058228119";
-const slotId = import.meta.env.VITE_ADSENSE_SLOT?.trim();
+const slotId = import.meta.env.VITE_ADSENSE_SLOT?.trim() || "8692700542";
 const isValidSlot = Boolean(slotId && slotId !== "0000000000" && slotId !== "undefined");
 
 function AdUnit() {
