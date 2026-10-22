@@ -168,7 +168,7 @@ function AvailableBabysitters() {
           );
         })}
       </div>
-      <AdUnit />
+      {!loading && !error && visibleSitters.length > 0 && <AdUnit />}
     </main>
   );
 }

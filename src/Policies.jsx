@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import AdUnit from "./AdUnit";
 
 function Policies() {
   const { t } = useTranslation();
@@ -143,8 +142,6 @@ function Policies() {
           <p>{t("familyPolicyEnforcement")}</p>
         </article>
       </section>
-
-      <AdUnit />
     </main>
   );
 }

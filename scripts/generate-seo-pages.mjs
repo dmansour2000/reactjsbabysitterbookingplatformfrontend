@@ -40,6 +40,9 @@ function makePage(pathname, title, description, isPrivate) {
   html = setMeta(html, "name", "twitter:title", title);
   html = setMeta(html, "name", "twitter:description", description);
   html = html.replace(/<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${canonical}" />`);
+  if (isPrivate) {
+    html = html.replace(/<meta name="google-adsense-account"[^>]*>\s*/g, "");
+  }
   return html;
 }
 

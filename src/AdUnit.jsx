@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 
 const clientId = import.meta.env.VITE_ADSENSE_CLIENT?.trim() || "ca-pub-3496568058228119";
 const slotId = import.meta.env.VITE_ADSENSE_SLOT?.trim();
+const isValidSlot = Boolean(slotId && slotId !== "0000000000" && slotId !== "undefined");
 
 function AdUnit() {
   const { t } = useTranslation();
   const adRef = useRef(null);
 
   useEffect(() => {
-    if (!clientId || !slotId) return undefined;
+    if (!clientId || !isValidSlot) return undefined;
 
     const scriptUrl = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(clientId)}`;
     let script = document.querySelector(`script[src="${scriptUrl}"]`);
@@ -48,7 +49,7 @@ function AdUnit() {
     return undefined;
   }, []);
 
-  if (!clientId || !slotId) return null;
+  if (!clientId || !isValidSlot) return null;
 
   return (
     <aside className="ad-placement" aria-label={t("advertisement")}>

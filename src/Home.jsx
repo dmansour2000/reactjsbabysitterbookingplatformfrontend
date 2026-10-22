@@ -33,6 +33,25 @@ function Home() {
           <p>{t("homeIntro")}</p>
         </div>
       </section>
+
+      <section className="container available-services" style={{ marginTop: "2rem", marginBottom: "2rem" }} aria-label={t("homeHowItWorksTitle")}>
+        <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>{t("homeHowItWorksTitle")}</h2>
+        <div className="available-service-grid">
+          <article className="available-service-card">
+            <h3>{t("homeStep1Title")}</h3>
+            <p>{t("homeStep1Desc")}</p>
+          </article>
+          <article className="available-service-card">
+            <h3>{t("homeStep2Title")}</h3>
+            <p>{t("homeStep2Desc")}</p>
+          </article>
+          <article className="available-service-card">
+            <h3>{t("homeStep3Title")}</h3>
+            <p>{t("homeStep3Desc")}</p>
+          </article>
+        </div>
+      </section>
+
       <AdUnit />
     </main>
   );

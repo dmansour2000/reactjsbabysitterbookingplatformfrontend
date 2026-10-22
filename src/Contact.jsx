@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import AdUnit from "./AdUnit";
 
 function Contact() {
   const { t } = useTranslation();
@@ -19,7 +18,6 @@ function Contact() {
           dinamansour2000@gmail.com
         </a>
       </section>
-      <AdUnit />
     </main>
   );
 }
