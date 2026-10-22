@@ -707,14 +707,14 @@ form {
   color: #374151;
 }
 
-.booking-panel *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-.booking-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-.sitter-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-.sitter-filters *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-.availability-control *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-.policy-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-.available-service-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4),
-form *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4) {
+.booking-panel *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+.booking-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+.sitter-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+.sitter-filters *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+.availability-control *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+.policy-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+.available-service-card *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *),
+form *:not(button):not(button *):not(.danger-button):not(.secondary-button):not(.nav-signup):not(.service-number):not(h1):not(h2):not(h3):not(h4):not(.service-tag):not(.service-tag *):not(.sitter-avatar):not(.sitter-avatar *) {
   color: #374151;
 }
 
@@ -1329,14 +1329,56 @@ html[dir="rtl"] .marketplace .tag-list {
   justify-content: flex-start;
 }
 
-.marketplace .service-tag {
-  color: #fff;
-  background: #65476d;
+/* Find care page (Marketplace) - white font on all purple backgrounds, buttons, tags and badges */
+.marketplace .service-tag,
+.marketplace .service-tag *,
+.sitter-card .service-tag,
+.sitter-card .service-tag *,
+.marketplace .tag-list .service-tag,
+.marketplace .tag-list span.service-tag,
+.marketplace .sitter-avatar,
+.marketplace .sitter-avatar *,
+.marketplace button,
+.marketplace button *,
+.marketplace .button,
+.marketplace .button *,
+.marketplace [style*="background: #65476d"],
+.marketplace [style*="background: #683f80"],
+.marketplace [style*="background:#65476d"],
+.marketplace [style*="background:#683f80"],
+.marketplace [style*="#65476d"],
+.marketplace [style*="#65476d"] *,
+.marketplace [style*="#683f80"],
+.marketplace [style*="#683f80"] *,
+.marketplace [style*="#4a225d"],
+.marketplace [style*="#4a225d"] *,
+.marketplace [style*="#773a78"],
+.marketplace [style*="#773a78"] *,
+.marketplace [style*="#7a3b79"],
+.marketplace [style*="#7a3b79"] *,
+.marketplace [style*="#58326e"],
+.marketplace [style*="#58326e"] * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  background-color: #65476d;
 }
 
-.marketplace .sitter-avatar {
-  color: #fff;
-  background: #65476d;
+/* Also ensure all purple background buttons/tags across the frontend have white font */
+[style*="#65476d"],
+[style*="#65476d"] *,
+[style*="#683f80"],
+[style*="#683f80"] *,
+[style*="#4a225d"],
+[style*="#4a225d"] *,
+[style*="#773a78"],
+[style*="#773a78"] *,
+[style*="#7a3b79"],
+[style*="#7a3b79"] *,
+[style*="#58326e"],
+[style*="#58326e"] *,
+[style*="#3d164d"],
+[style*="#3d164d"] * {
+  color: #ffffff !important;
 }
 
 .photo-open-button {
