@@ -867,8 +867,8 @@ textarea::placeholder {
 }
 
 /* CareNest Mobile-matching button styles & white text on pink/button backgrounds */
-button:not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button),
-button:not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button) *,
+button:not(.secondary-button):not(.language-switcher button):not(.account-details-header button),
+button:not(.secondary-button):not(.language-switcher button):not(.account-details-header button) *,
 input[type="submit"],
 input[type="button"],
 .primary-button,
@@ -904,8 +904,8 @@ form input[type="submit"],
   fill: #ffffff !important;
 }
 
-button:hover:not(:disabled):not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button),
-button:hover:not(:disabled):not(.secondary-button):not(.language-switcher button):not(.photo-modal-close):not(.account-details-header button) *,
+button:hover:not(:disabled):not(.secondary-button):not(.language-switcher button):not(.account-details-header button),
+button:hover:not(:disabled):not(.secondary-button):not(.language-switcher button):not(.account-details-header button) *,
 form button:hover:not(:disabled):not(.secondary-button),
 form button:hover:not(:disabled):not(.secondary-button) *,
 .booking-card button:not(.secondary-button):hover:not(:disabled),
@@ -926,8 +926,6 @@ form button:hover:not(:disabled):not(.secondary-button) *,
 /* Light grey and translucent neutral buttons: purple font */
 .language-switcher button:not(.active),
 .language-switcher button:not(.active) *,
-.photo-modal-close,
-.photo-modal-close *,
 .account-details-header button,
 .account-details-header button *,
 .btn-light-grey,
@@ -974,7 +972,6 @@ button[style*="rgba(255,255,255"] * {
 }
 
 .language-switcher button:not(.active):hover,
-.photo-modal-close:hover,
 .account-details-header button:hover,
 button[style*="#eee"]:hover,
 button[style*="#ddd"]:hover,
@@ -1669,12 +1666,39 @@ html[dir="rtl"] .marketplace .tag-list {
   overflow-wrap: anywhere;
 }
 
-.photo-modal-close {
+.photo-modal-close,
+.photo-modal-close *,
+.photo-modal-content .photo-modal-close,
+.photo-modal-content .photo-modal-close * {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
   width: auto;
   margin: 0;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  background-color: #683f80 !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  border: none !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.photo-modal-close:hover,
+.photo-modal-close:hover *,
+.photo-modal-content .photo-modal-close:hover,
+.photo-modal-content .photo-modal-close:hover * {
+  background-color: #58326e !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+html[dir="rtl"] .photo-modal-close {
+  right: auto;
+  left: 0.75rem;
 }
 
 .account-details-modal,
