@@ -2,7 +2,7 @@
 
 CareNest is a React application built with Vite. The frontend and backend are maintained and deployed from **separate Git repositories**.
 <p>
-   <img src="https://github.com/dmansour2000/reactjsbabysitterbookingplatformfrontend/blob/main/Screenshot%202026-10-21%20at%207.51.27%E2%80%AFAM.png", width="500" hspace="4"/>
+   <img src="https://github.com/dmansour2000/reactjsbabysitterbookingplatformfrontend/blob/main/Screenshot%202026-10-22%20at%209.55.15%E2%80%AFAM.png", width="500" hspace="4"/>
 </p>
 
 ## Live website and API
