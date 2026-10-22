@@ -34,8 +34,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="container available-services" style={{ marginTop: "2rem", marginBottom: "2rem" }} aria-label={t("homeHowItWorksTitle")}>
-        <h2 style={{ textAlign: "center", marginBottom: "1.5rem" }}>{t("homeHowItWorksTitle")}</h2>
+      <section className="container available-services home-how-it-works" aria-label={t("homeHowItWorksTitle")}>
+        <h2>{t("homeHowItWorksTitle")}</h2>
         <div className="available-service-grid">
           <article className="available-service-card">
             <h3>{t("homeStep1Title")}</h3>
