@@ -49,6 +49,28 @@ function Policies() {
           <p style={{ color: "#7a3b79", fontWeight: "600", fontSize: "0.95rem", marginTop: "0.2rem" }}>
             {t("privacyPolicySubtitle")}
           </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", margin: "0.75rem 0 1rem" }}>
+            <span style={{ fontSize: "0.9rem", color: "#4a4050", fontWeight: "600" }}>📱 {t("googlePlayStoreListing")}:</span>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.carenestbooking.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.35rem 0.85rem",
+                background: "#683f80",
+                color: "#ffffff",
+                borderRadius: "8px",
+                textDecoration: "none",
+                fontSize: "0.85rem",
+                fontWeight: "600"
+              }}
+            >
+              https://play.google.com/store/apps/details?id=com.carenestbooking.app
+            </a>
+          </div>
           <p style={{ lineHeight: "1.7" }}>{t("privacyPolicyIntro")}</p>
 
           <hr style={{ border: "none", borderTop: "1px solid #ebd3e4", margin: "1.25rem 0" }} />
@@ -111,6 +133,17 @@ function Policies() {
           {/* 8. Contact Us */}
           <h3>{t("privacyContactHeading")}</h3>
           <p>{t("privacyContactBody")}</p>
+          <p style={{ marginTop: "0.5rem" }}>
+            <strong>{t("googlePlayStoreListing")}:</strong>{" "}
+            <a
+              href="https://play.google.com/store/apps/details?id=com.carenestbooking.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#683f80", fontWeight: "700" }}
+            >
+              https://play.google.com/store/apps/details?id=com.carenestbooking.app
+            </a>
+          </p>
         </article>
       </section>
 
