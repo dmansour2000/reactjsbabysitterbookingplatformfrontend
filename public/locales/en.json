@@ -196,7 +196,7 @@
   "privacyPermissionsHeading": "2. Mobile App Permissions",
   "privacyPermissionsBody": "The CareNest Android application requests the following runtime permissions strictly to support core functionality:",
   "privacyPermissionCamera": "Camera (CAMERA): Used exclusively if you choose to take a photo of your national ID, passport, or profile picture directly using the in-app camera.",
-  "privacyPermissionStorage": "Photo Library & Storage (READ_MEDIA_IMAGES / READ_EXTERNAL_STORAGE): Used solely to allow you to select and upload existing photos for your profile or verification documents.",
+  "privacyPermissionStorage": "Photo Library & System Picker: Used solely to allow you to select and upload existing photos for your profile or verification documents via the secure Android system photo picker without requiring broad storage access.",
   "privacyPermissionAdId": "Advertising ID (AD_ID): Used by the Google Mobile Ads SDK to prevent fraudulent ad activity, cap ad frequency, and deliver relevant advertisements.",
   "privacyDataUseHeading": "3. How We Use Your Information",
   "privacyDataUseBody": "We process personal data only for legitimate platform operations and safety purposes, including:",
